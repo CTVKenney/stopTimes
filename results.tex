@@ -78,28 +78,81 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
 % Add details!
 % (I [Robert] volunteer to do this.)
 \begin{proof}
-Define $e_0, e_1 : V \to V$ by
-$$e_0(b) = \begin{cases} 0 \text{ if } b=0 \\ (b_1, ..., b_j, 0, 1, 0,0,...) \text{ if } b = (b_1, ..., b_j, 1, 0, 0, ...) \end{cases} $$
-and
-$$e_1(b) = \begin{cases} (1, 0,0,...) \text{ if } b=0 \\ (b_1, ..., b_j, 1, 1, 0,0,...) \text{ if } b=(b_1, ..., b_j, 1, 0, 0, ...). \end{cases} $$
-Note that $e_0$ and $e_1$ are injective, $e_0(V) \cap e_1(V) = \emptyset,$ and $e_0(V) \cup e_1(V) = V.$
-Let
-$f:V \to V$
-be given by
-$$f(b) = \begin{cases} (b_1, ..., b_{j-1}, 1, 0,0,...) \text{ if } \exists j>0 \text{ s.t. } b = (b_1, ..., b_j, 1, 0,0,...) \\ 0 \text{ otherwise,} \end{cases}$$
-so that $f \circ e_0 = f \circ e_1 = \text{id}_V.$
-The map $e_1$ takes the element of $\oct_1$ to $\oct_2$, the element of $\oct_2$ to $\oct_4$, and in general for $k \geq 1,$
-$$e_1 : \oct_{2k} \to \oct_{2k+2}.$$
-Similarly, for $k \geq 2,$
-$$e_0 : \oct_{4k-2} \to \oct_{4k}.$$
-Let $\oct_{2k}^1 = \{(b_1, ..., b_{2k}, 1, 0,0,...) \in V \text{ s.t. } (b_1,...,b_{2k},0,0,...) \in \oct_{2k}\}.$
-Then
-$$e_0 : \oct_{4k} \to \oct_{4k+2} \cup \oct_{2k}^1$$
-for all $k \geq 1.$
-Now $e_0(\oct_{4k}) \supseteq \oct_{2k}^1,$ since if $b = (b_1, ..., b_{k-1}, 1, 0,0,...) \in \oct_{2k}$ then $(b_1, ..., b_{k-1}, 1, 0,0,...,0,1,0,0,...) \in \oct_{4k},$
-where the final `1' is preceded by $k-1$ `0's.  
-Finally, for all $k \geq 1,$
-$$ e_0(\oct_{2k}) \cup e_1(\oct_{2k}) \supseteq \oct_{2k+2}.$$
+    Each nonzero element in $V$ has a final nonzero entry. Let $e_0 \colon V
+    \to V$ be a map which inserts a $0$ in the position of this final entry,
+    shifting the previous entry to the right. Similarly, let $e_1$ insert a $1$
+    into this position. Symbolically,
+    \begin{equation*}
+        e_0(b) =
+            \begin{cases}
+                0 \text{ if } b=0 \\
+                (b_1, ..., b_j, 0, 1, 0,0,...) \text{ if } b = (b_1, ..., b_j, 1, 0, 0, ...)
+            \end{cases}
+    \end{equation*}
+    and
+    \begin{equation*}
+        e_1(b) =
+            \begin{cases}
+                (1, 0, 0, \dots) \text{ if } b=0 \\
+                (b_1, ..., b_j, 1, 1, 0,0,...) \text{ if } b = (b_1, ..., b_j, 1, 0, 0, ...)
+            \end{cases}.
+    \end{equation*}
+    Note that $e_0$ and $e_1$ are injective, $e_0(V) \cap e_1(V) = \emptyset,$
+    and $e_0(V) \cup e_1(V) = V.$
+
+    For any positive integer $k$,
+    \begin{equation*}
+        \oct_{2k + 2} \subseteq e_0(\oct_{2k}) \cup e_1(\oct_{2k}).
+    \end{equation*}
+    Indeed, the final nonzero entry of every string in $\oct_{2k + 2}$ occurs
+    at position $2k + 1$. Removing the immediately preceding entry produces a
+    string in $\oct_{2k}$---$e_0$ and $e_1$ simply add the entry back.
+
+    In the other direction, for $k \geq 2$ we have
+    \begin{equation*}
+        e_1(\oct_{2k}) \subseteq \oct_{2k + 2},
+    \end{equation*}
+    because inserting a $1$ into position $k$ will never decrease the stopping
+    time. For \emph{odd} $k \geq 2$ we have
+    \begin{equation*}
+        e_0(\oct_{2k}) \subseteq \oct_{2k + 2},
+    \end{equation*}
+    because inserting a $0$ at position $k$ will only decrease the stopping
+    time if the new stopping time \emph{is} $k$; this is impossible if $k$ is
+    odd. This shows that
+    \begin{equation*}
+        S_{2k + 2} = e_0(S_{2k}) \cup e_1(S_{2k}),
+    \end{equation*}
+    and thus
+    \begin{equation*}
+        g(2k + 2) = 2 g(2k)
+    \end{equation*}
+    for $k$ odd.
+
+    To handle the even case, let
+    \begin{equation*}
+        \oct_{2k}^1 = \{(b_1, ..., b_{2k}, 1, 0,0,...) \in V \text{ s.t. } (b_1,...,b_{2k},0,0,...) \in \oct_{2k}\}.
+    \end{equation*}
+    (Note that $|\oct_{2k}^1| = |\oct_{2k}| = g(2k)$.) Then
+    \begin{equation*}
+        e_0(\oct_{4k}) \subseteq \oct_{4k + 2} \cup \oct_{2k}^1.
+    \end{equation*}
+    This implies
+    \begin{equation*}
+        \oct_{4k + 2} \cup \oct_{2k}^1 = e_0(\oct_{4k}) \cup e_1(\oct_{4k}).
+    \end{equation*}
+    (That the left contains the right is clear given the preceding inclusion.
+    For the other direction, the only problem is $\oct_{2k}^1 \subseteq
+    e_0(\oct_{4k}) \cup e_1(\oct_{4k})$. This is easily handled by considering
+    the element immediately preceding the final nonzero element.) Therefore
+    \begin{equation*}
+        g(4k + 2) + |\oct_{2k}^1| = 2 g(4k),
+    \end{equation*}
+    or
+    \begin{equation*}
+        g(4k + 2) = 2 g(4k) - g(2k).
+    \end{equation*}
+    This establishes the recurrence.
 \end{proof}
 
 \end{document}
