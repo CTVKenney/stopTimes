@@ -37,9 +37,25 @@ binaryStrings := proc(n)
     allStrings:
 end:
 
+# Generate all base-b strings ({0, 1, ..., b - 1}-lists) of length n.
+baseStrings := proc(b, n)
+    local allStrings, i, str:
+    allStrings := [[]]:
+    for i from 1 to n do
+        allStrings:=[seq(seq([op(str), d], str in allStrings), d=0..b-1)]:
+    od:
+
+    allStrings:
+end:
+
 # Generate all binary strings of length n with stopping time k (defaults to n).
 stoppedStrings := proc(n, k := n)
     select(s -> stoppingTime(s) = k, binaryStrings(n)):
+end:
+
+# Generate all base-b strings of length n with stopping time k (defaults to n).
+stoppedBaseStrings := proc(b, n, k := n)
+    select(s -> stoppingTime(s) = k, baseStrings(b, n)):
 end:
 
 #A recursive program to generate all lists of stopped strings of length less than or equal to n, for n an even positive integer
