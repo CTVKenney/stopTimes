@@ -59,7 +59,7 @@ stoppedBaseStrings := proc(b, n, k := n)
 end:
 
 #A recursive program to generate all lists of stopped strings of length less than or equal to n, for n an even positive integer
-#Outputs a list of length g(n) containing all the strings of length n with stopping time n
+#Outputs a list L, with (for i>1) L[i] containing a list of all strings of length 2*i-2 having stopping time 2*i-2.
 recStoppedStrings:=proc(n) local L,l,i,j,new:
 L:=[[[0]],[[1,0]],[[1,1,0,0]]]:
 for i from 3 to n/2+1 do
