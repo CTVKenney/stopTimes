@@ -1,21 +1,83 @@
-\documentclass{amsart}
+\documentclass[12pt]{amsart}
+\usepackage{amsthm}
 \usepackage{graphicx}
 \newcommand*\oct{\vcenter{\hbox{\includegraphics[width=.9em]{octagon.png}}}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\Z}{\mathbb{Z}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
 \title{Stopping Times}
 \author{Robert Dougherty-Bliss and Charles Kenney}
+
 \begin{document}
 \maketitle
-Let $$V = \bigoplus_{k=1}^\infty (\Z/2\Z)$$
-and
-$$\oct_1 = \{0\} \subset V,$$
-while for $k \geq 1,$
-$$\oct_{2k} = \{v \in V : \forall j > k, v_j = 0, \text{ and } v \text{ has stopping time } 2k \}. $$
-Let $g(n) = |\oct_n|.$ Then
-$$g(4n) = 2g(4n-2)$$
-and
-$$g(4n+2) = 2g(4n)-g(2n).$$
+
+\begin{definition}
+    A \emph{binary string of length $n$} is a tuple $(x_1, x_2, \dots, x_n)$
+    where each $x_k$ is $0$ or $1$. Such a string is said to be \emph{stopped}
+    at index $k$ if every index of the tuple in $(k / 2, k]$ is zero. The
+    \emph{stopping time} of a binary string is the smallest $k$ such that the
+    string is stopped at index $k$, or $\infty$ if no such $k$ exists. Note
+    that, except $1$ and $\infty$, every stopping time is even.
+\end{definition}
+
+We are primarily interested in binary strings of length $n$ which have stopping
+time $n$. Indeed, let $g(n)$ be the number of such strings. Our first goal is
+to show that $g(n)$ satifies the recurrence
+\begin{align*}
+    g(1) &= g(2) = g(4) = 1 \\
+    g(4n) &= 2 g(4n - 2) \\
+    g(4n + 2) &= 2 g(4n) - g(2n).
+\end{align*}
+This will identify the sequence $a(n) = g(2n)$ as the
+\emph{Narayana--Zidek--Capell numbers}, A2083 in the OEIS. This recurrence was
+discovered thanks to the OEIS.
+
+Our first definition discusses \emph{finite} binary strings, but it is more
+convenient to work with \emph{infinite} binary strings which are nonzero in
+only finitely many places. This is equivalent, and has the benefit that every
+such infinite string has a finite stopping time when considered as a
+sufficiently long, finite binary string.
+
+\begin{definition}
+    Let
+    \begin{equation*}
+        V = \bigoplus_{k=1}^\infty (\Z/2\Z)
+    \end{equation*}
+    be the direct sum of infinitely many copies of $\Z / 2\Z$. That is, the set
+    of all infinite tuples $(x_1, x_2, x_3, \dots)$ where each $x_k$ is $0$ or
+    $1$, and only finitely many are $1$. For each positive integer $k$, let
+    $\oct_k$ be the set of elements of $V$ which are zero beyond position $k$
+    and, when the first $k$ entries are regarded as a finite binary string,
+    they have stopping time $k$. That is, $\oct_1 = \{0\} \subset V$,
+    \begin{equation*}
+        \oct_{2k} = \{v \in V : \forall j > k, v_j = 0, \text{ and } v \text{ has stopping time } 2k \}
+    \end{equation*}
+    and $\oct_{2k + 1} = \emptyset$ for every integer $k \geq 1$.
+\end{definition}
+
+It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
+
+\begin{theorem}
+    The sequence $g(n)$ satisfies the recurrence
+    \begin{align*}
+        g(1) &= g(2) = g(4) = 1 \\
+        g(4n) &= 2 g(4n - 2) \\
+        g(4n + 2) &= 2 g(4n) - g(2n).
+    \end{align*}
+\end{theorem}
+
+% Todo
+% Clean this up!
+% Add details!
+% (I [Robert] volunteer to do this.)
+\begin{proof}
 Define $e_0, e_1 : V \to V$ by
 $$e_0(b) = \begin{cases} 0 \text{ if } b=0 \\ (b_1, ..., b_j, 0, 1, 0,0,...) \text{ if } b = (b_1, ..., b_j, 1, 0, 0, ...) \end{cases} $$
 and
@@ -38,4 +100,6 @@ Now $e_0(\oct_{4k}) \supseteq \oct_{2k}^1,$ since if $b = (b_1, ..., b_{k-1}, 1,
 where the final `1' is preceded by $k-1$ `0's.  
 Finally, for all $k \geq 1,$
 $$ e_0(\oct_{2k}) \cup e_1(\oct_{2k}) \supseteq \oct_{2k+2}.$$
+\end{proof}
+
 \end{document}
