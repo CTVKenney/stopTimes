@@ -80,7 +80,7 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
 % Clean this up!
 % Add details!
 % (I [Robert] volunteer to do this.)
-\begin{proof}
+\begin{proof} \textit{(1)}
     Each nonzero element in $V$ has a final nonzero entry (a one). Let $e_0 \colon V
     \to V$ be a map which inserts a $0$ in the position of this final entry,
     shifting the previous final entry to the right one space. Similarly, let $e_1$ insert a $1$.
@@ -156,6 +156,40 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
         g(4k + 2) = 2 g(4k) - g(2k).
     \end{equation*}
     This establishes the recurrence.
+\end{proof}
+
+\begin{proof} \textit{(2)}
+    \begin{definition}
+        A \emph{composition} of $n$ is a vector in $(\Z_{>0})^m$, for some $m \in \{1,2,...,n\},$ whose components add to $n$.
+    \end{definition}
+    The $n$th Narayana-Zidek-Capell number, $a(n),$ is the cardinality of the set
+    \begin{align*}
+        R_n = \left\{ \text{Compositions } p \text{ of } n \text{ satisfying } p_1 = 1 \text{ and } p_k \leq \sum_{j=1}^{k-1} p_j \right\}.
+    \end{align*}
+    %OEIS reference for this, or better yet the original source
+    For $j \in \Z_{>0},$ let $f(j) = (0,0,...,0,1)$, with $j-1$ zeroes preceding the one.
+    Then for $p \in (\Z_{>0})^m,$ let
+    \begin{align*}
+        F(p) = (f(p_1), f(p_2), ..., f(p_m), 0,0,...),
+    \end{align*}
+    concatenated in the natural way, with a tail of zeroes appended at the end.
+    Then $F: R_n \overset{\sim}{\to} \oct_{2n}$ is a bijection, so $|\oct_{2n}| = g(2n) = a(n).$
+    Indeed, if $p \in R_n$, then since $\sum_{j=1}^{m} p_j = n,$ the final nonzero entry in $F(p)$ is in spot $n$. Thus
+    $F(p)$ is stopped at time $2n$, and is not stopped at time $t$ for any $t \in [n,2n-1].$
+    And if the zeroes from $f(p_r)$ in $F(p)$ caused $F(p)$ to be stopped at some time $t \leq n-1,$
+    \begin{align*}
+        F(p) = (f(p_1), ..., f(p_{r-1}), 0,0,...,&0,...) \\
+	&\uparrow \\
+	&\text{index } t
+    \end{align*}
+    then $p_r  > \lceil t/2 \rceil \geq \sum_{j=1}^{r-1} p_j.$ But this would contradict the fact that $p \in R_n.$
+    And, if $b \in \oct_{2n}$ has 1s at indices $a_1 = 1, a_2, ..., a_\ell = n,$ then
+    \begin{align*}
+	&F^{-1}: \oct_{2n} \to R_n \\
+	&F^{-1} : b \mapsto (a_1, a_2 - a_1, a_3 - a_2, ..., a_\ell - a_{\ell-1})
+    \end{align*}
+    provides an inverse to $F$, since the index $a_r$ of the $r$th one in b is at most
+    twice the index $a_{r-1}$ of the $(r-1)$st one.
 \end{proof}
 
 \end{document}

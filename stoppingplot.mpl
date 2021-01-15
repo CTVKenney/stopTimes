@@ -39,7 +39,7 @@ end:
 
 # Generate all base-b strings ({0, 1, ..., b - 1}-lists) of length n.
 baseStrings := proc(b, n)
-    local allStrings, i, str:
+    local allStrings, i, str, d:
     allStrings := [[]]:
     for i from 1 to n do
         allStrings:=[seq(seq([op(str), d], str in allStrings), d=0..b-1)]:
