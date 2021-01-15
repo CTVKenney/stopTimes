@@ -18,6 +18,9 @@
 \begin{document}
 \maketitle
 
+\section{Stopped binary strings}%
+\label{sec:stopped_binary_strings}
+
 \begin{definition}
     A \emph{binary string of length $n$} is a tuple $(x_1, x_2, \dots, x_n)$
     where each $x_k$ is $0$ or $1$. Such a string is said to be \emph{stopped}
@@ -157,5 +160,162 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
     \end{equation*}
     This establishes the recurrence.
 \end{proof}
+
+\section{Stopped reals in the unit interval}
+\label{sec:stopped_points_in_the_unit_interval}
+
+Every element of the unit interval $[0, 1]$ can be regarded, via its binary
+expansion, as an infinite binary string, i.e., an element of $\Z / 2 Z \times
+\Z / 2Z \times \cdots$. This differs from the set $V$ of the previous section
+by allowing potentially infinitely many nonzero entries. For example, the real
+\begin{equation*}
+    (0.1010101010101\dots)_2 = \frac{2}{3}
+\end{equation*}
+is perfectly well-defined, but not as a member of $\bigoplus_{k = 1}^\infty (\Z
+/ 2 \Z)$. In this way, it makes since to discuss stopped \emph{reals},
+considering each real as an infinite binary string. (We shall interchangably
+refer to reals as both strings and numbers.) Our focus now becomes
+\emph{topological} as we examine the \emph{set} of stopped reals in the unit
+interval.
+
+\begin{definition}
+    Let $S_k$ be the set of reals in $[0, 1]$ which have stopping time $k$ when
+    regarded as an infinite binary string. Membership in this set is determined
+    by examining only the first $k$ bits of a binary expansion, so $S_k$ is
+    measureable. Let $S = \cup_{k \geq 1} S_k$ be the set of all stopped reals
+    in $[0, 1]$, which is measurable since the $S_k$ are.
+\end{definition}
+
+Let us get a feel for what the sets $S_k$ ``look like.'' First, observe that
+every element of $S_k$ consists of a binary string which has stopping time $k$
+followed by \emph{any} binary string at all. Thus, each string with stopping
+time $k$ determines an interval of length $2^{-k}$ included in $S_k$, and the
+disjoint union of these intervals is \emph{all} of $S_k$. In this way, we can
+compute the following sets:
+\begin{align*}
+    S_1 &= [0, 1/2) \\
+    S_2 &= [1/2, 3/4) \\
+    S_3 &= \emptyset \\
+    S_4 &= [0, 1/2) \\
+    S_5 &= \emptyset \\
+    S_6 &= [13/16, 14/16) \cup [15/16, 1)\\
+\end{align*}
+
+[Insert the stopping time plot somewhere around here.]
+
+This simple description of $S_k$ gives us a nice expression for the measure of
+$S$.
+
+\begin{theorem}
+    Let $\beta_2$ be the measure of $S$. Then
+    \begin{equation*}
+        \beta_2 = \sum_{k \geq 1} \frac{g(k)}{2^k} = \frac{1}{2} + \sum_{k \geq 1} \frac{g(2k)}{4^k}
+        \approx 0.841657913173647.
+    \end{equation*}
+\end{theorem}
+
+\begin{proof}
+    The measure of $S_k$ is $g(k) / 2^k$, where $g(k)$ is the number of binary
+    strings of length $k$ with stopping time $k$. Since $S$ is the pairwise
+    disjoint union of the $S_k$, the ``exact'' result follows immediately.
+\end{proof}
+
+In the previous section we established that the sequence $a(n) = g(2n)$ is
+A2083 in the OEIS. It is known that $a(n) = O(2^n)$, so the above series
+converges very quickly. Using the recurrence of the previous section to
+generate the first hundred terms of $g(2k)$ it is easy to approximate the sum
+and provide rigorous lower bounds. To get more rigorous upper bounds, first
+note $g(2n) / 2^n$ is monotonically decreasing. This implies that the error of
+using
+\begin{equation*}
+    \frac{1}{2} + \sum_{1 \leq k < n} \frac{g(2k)}{4^k}
+\end{equation*}
+as an approximation to the measure of $S$ is
+\begin{equation*}
+    \sum_{k \geq n} \frac{g(2k)}{4^k}
+        \leq \frac{g(2n)}{2^n} \sum_{k \geq n} \frac{1}{2^k}
+        = \frac{2g(2n)}{4^n}.
+\end{equation*}
+For example, using the first $99$ terms ($n = 100$) will give an error of no
+more than
+\begin{equation*}
+    \frac{22284668265087}{158456325028528675187087900672}
+    \approx 0.1406360286 \times 10^{-15}.
+\end{equation*}
+
+The constant $\beta_2$ seems new. We conjecture that it is irrational, and even
+transcendental. In fact, the only thing we know about it is that it is a value
+of the ordinary generating function of $g(n)$.
+
+\begin{definition}
+    Let
+    \begin{equation*}
+        G(z) = \sum_{k \geq 0} g(k) z^k = z + \sum_{k \geq 1} g(2k) z^{2k}
+    \end{equation*}
+    be the ordinary generating function of $g(n)$, and
+    \begin{equation*}
+        A(z) = \sum_{k \geq 1} g(2k) z^k
+    \end{equation*}
+    the ordinary generating function of $g(2k)$. Note that $G(z) = z + A(z^2)$.
+\end{definition}
+
+\begin{lemma}
+    The generating function $A(z)$ is analytic on a disk of radius $1 / 2$
+    centered at the origin and satisfies
+    \begin{equation*}
+        A(z) = \frac{z(1 - A(z^2))}{1 - 2z}.
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    The equation is a routine computation using the recurrence for $g(2n)$ proved in
+    the previous section. For convenience, let $a(n) = g(2n)$. Then:
+    \begin{align*}
+        \sum_{k \geq 1} a(k) z^k
+            &= \sum_{k \geq 1} a(2k) z^{2k} + \sum_{k \geq 0} a(2k + 1) z^{2k + 1} \\
+            &= \sum_{k \geq 1} 2 a(2k - 2) z^{2k} + a(1) z + \sum_{k \geq 1} (2a(2k) - a(k)) z^{2k + 1} \\
+            &= 2 z \sum_{k \geq 0} a(2k + 1) z^{2k + 1} + 2 z \sum_{k \geq 1} a(2k) z^{2k} - z A(z^2) + z \\
+            &= 2z A(z) + z(1 - A(z^2)).
+    \end{align*}
+    Solving this for $A(z)$ yields the result. It is well-known that $a(n) =
+    O(2^n)$, so $A(z)$ converges everywhere that $\sum_{k \geq 0} (2z)^k = (1 -
+    2z)^{-1}$ does, which is at least a disk of radius $1/2$.
+\end{proof}
+
+It is clear that
+\begin{equation*}
+    \beta_2 = G(1/2) =\frac{1}{2} + A(1/4).
+\end{equation*}
+But again, this is very little information. We suspect that neither $A(z)$ nor
+$G(z)$ are algebraic.
+
+Our choice of notation for $\beta_2$---including a subscript $2$---is quite
+intentional. Everything that we have done with binary sequences generalizes
+almost directly to arbitrary bases. Take the definitions we gave before and
+replace any occurrence of ``$1$'' with ``nonzero entry.'' Almost everything
+that we have said carries over, except that the recurrence for $g(n)$ is
+slightly different. We will now give these definitions in order to define an
+infinite family $\{\beta_n\}$ of constants.
+
+\begin{definition}
+    For any integer $b \geq 2$, say that a finite ``$b$-ary'' tuple $(x_1,
+    \dots, x_n)$ with $x_k \in \{0, 1, \dots, b - 1\}$ is \emph{stopped} at an
+    index $k$ provided that every index in $(k / 2, k]$ is zero. The
+    \emph{stopping time} of such a string is the smallest $k$ such that the
+    string is stopped at $k$, or $\infty$ if no such $k$ exists. The stopping
+    time of an infinite tuple is the stopping time of its shortest stopped
+    prefix, or $\infty$ if no such prefix exists.
+\end{definition}
+
+\begin{definition}
+    For any integer $b \geq 2$, let $g_b(n)$ be the number of $b$-ary strings
+    of length $n$ with stopping time $n$.
+\end{definition}
+
+The same argument used in Theorem~1 (defining, now, $e_0$, $e_1$, and so on up
+to $e_{b - 1}$) will establish the following result.
+
+\begin{theorem}
+\end{theorem}
 
 \end{document}
