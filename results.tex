@@ -168,7 +168,7 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
     This establishes the recurrence.
 \end{proof}
 
-For arbitrary bases, the recurrence is slightly different. Let $g_b(n)$ be the
+A slightly different recurrence holds for arbitrary bases. Let $g_b(n)$ be the
 number of $b$-ary strings of length $n$ with stopping time $n$. Then
 \begin{align*}
     g_b(1) &= 1 \\
@@ -308,10 +308,10 @@ It is clear that
 But again, this is very little information. We suspect that neither $A(z)$ nor
 $G(z)$ are algebraic.
 
-By choosing different bases to expand reals with in $[0, 1]$, we get different
-sets and different measures. The same arguments apply, except now the measure
-of the sets $S_k$ will be $g_b(k) / b^k$. Thus, the measure of the set of
-$b$-ary stopped reals is
+Expanding reals in $[0, 1]$ with different bases yields different ``stopped
+sets'' and different measures. The same arguments apply, except now the measure
+of the $S_k$ will be $g_b(k) / b^k$. Thus, the measure of the set of $b$-ary
+stopped reals is
 \begin{equation*}
     \beta_b = \frac{1}{b} + \sum_{k \geq 1} \frac{g_b(2k)}{b^{2k}}.
 \end{equation*}
@@ -323,14 +323,31 @@ These constants go as follows:
     \beta_5 &= 0.39071175514852239829 \\
     \beta_6 &= 0.32805820924751380527.
 \end{align*}
+These seem to be decreasing, and indeed they are, down to 0.
 
-Conjecture: $g_b(2k) / b^k$ is monotonically decreasing as well. (Probably
-true, just play with the recurrence.) This would give
-\begin{equation*}
-    \beta_b = \frac{1}{b} + O(\sum_{k \geq 1} \frac{1}{b^k}) = O(1/b).
-\end{equation*}
+\begin{theorem}
+    For $b \geq 2$,
+    \begin{equation*}
+        \frac{1}{b} \leq \beta_b \leq \frac{2}{b}.
+    \end{equation*}
+\end{theorem}
 
-\section{Stopped integers}%
+\begin{proof}
+    The definition of $g_b$ shows that it is positive, and the recurrence
+    established in the previous section shows that $g_b(2k) / b^k$ is
+    monotonically decreasing. In particular,
+    \begin{equation*}
+        g_b(2k) / b^k \leq g_b(2) / b = \frac{b - 1}{b}.
+    \end{equation*}
+    for $k \geq 1$. Therefore
+    \begin{equation*}
+        \beta_b \leq \frac{1}{b} + \frac{b - 1}{b} \sum_{k \geq 1} \frac{1}{b^k}
+        = \frac{2}{b}.
+    \end{equation*}
+    The lower bound is from the definition of $\beta_b$.
+\end{proof}
+
+\section{Stopped integers}
 \label{sec:stopped_integers}
 
 \begin{definition}
