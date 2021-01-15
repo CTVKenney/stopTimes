@@ -30,6 +30,13 @@
     that, except $1$ and $\infty$, every stopping time is even.
 \end{definition}
 
+We should first note that this definition and our later results generalize
+immediately to bases other than $2$. The only change in the definition is that
+the elements of the strings may be anything in $\{0, 1, \dots, b - 1\}$ in base
+$b$. In the later arguments, ``$1$'' should be replaced with ``any nonzero
+number.''  For simplicity we will sometimes discuss only binary, but will quote
+the arbitrary base results when they are needed.
+
 We are primarily interested in binary strings of length $n$ which have stopping
 time $n$. Indeed, let $g(n)$ be the number of such strings. Our first goal is
 to show that $g(n)$ satifies the recurrence
@@ -161,6 +168,16 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
     This establishes the recurrence.
 \end{proof}
 
+For arbitrary bases, the recurrence is slightly different. Let $g_b(n)$ be the
+number of $b$-ary strings of length $n$ with stopping time $n$. Then
+\begin{align*}
+    g_b(1) &= 1 \\
+    g_b(2) &= b - 1 \\
+    g_b(4) &= (b - 1)^2 \\
+    g_b(4n) &= b g_b(4n - 2) \\
+    g_b(4n + 2) &= b g_b(4n) - (b - 1) g_b(2n).
+\end{align*}
+
 \section{Stopped reals in the unit interval}
 \label{sec:stopped_points_in_the_unit_interval}
 
@@ -214,9 +231,10 @@ $S$.
 \end{theorem}
 
 \begin{proof}
-    The measure of $S_k$ is $g(k) / 2^k$, where $g(k)$ is the number of binary
-    strings of length $k$ with stopping time $k$. Since $S$ is the pairwise
-    disjoint union of the $S_k$, the ``exact'' result follows immediately.
+    The measure of $S_k$ is $g(k) / 2^{2k}$, where $g(k)$ is the number of
+    binary strings of length $k$ with stopping time $k$. Since $S$ is the
+    pairwise disjoint union of the $S_k$, the ``exact'' result follows
+    immediately.
 \end{proof}
 
 In the previous section we established that the sequence $a(n) = g(2n)$ is
@@ -233,7 +251,8 @@ as an approximation to the measure of $S$ is
 \begin{equation*}
     \sum_{k \geq n} \frac{g(2k)}{4^k}
         \leq \frac{g(2n)}{2^n} \sum_{k \geq n} \frac{1}{2^k}
-        = \frac{2g(2n)}{4^n}.
+        = \frac{2g(2n)}{4^n}
+        = O(1/2^n).
 \end{equation*}
 For example, using the first $99$ terms ($n = 100$) will give an error of no
 more than
@@ -242,9 +261,10 @@ more than
     \approx 0.1406360286 \times 10^{-15}.
 \end{equation*}
 
-The constant $\beta_2$ seems new. We conjecture that it is irrational, and even
-transcendental. In fact, the only thing we know about it is that it is a value
-of the ordinary generating function of $g(n)$.
+The constant $\beta_2$ seems new. Accordingly, we conjecture that it is
+irrational, and even transcendental. But we really know nothing about
+$\beta_2$. The only information we have is that it is a value of the ordinary
+generating function of $g(n)$.
 
 \begin{definition}
     Let
@@ -288,33 +308,42 @@ It is clear that
 But again, this is very little information. We suspect that neither $A(z)$ nor
 $G(z)$ are algebraic.
 
-Our choice of notation for $\beta_2$---including a subscript $2$---is quite
-intentional. Everything that we have done with binary sequences generalizes
-almost directly to arbitrary bases. Take the definitions we gave before and
-replace any occurrence of ``$1$'' with ``nonzero entry.'' Almost everything
-that we have said carries over, except that the recurrence for $g(n)$ is
-slightly different. We will now give these definitions in order to define an
-infinite family $\{\beta_n\}$ of constants.
+By choosing different bases to expand reals with in $[0, 1]$, we get different
+sets and different measures. The same arguments apply, except now the measure
+of the sets $S_k$ will be $g_b(k) / b^k$. Thus, the measure of the set of
+$b$-ary stopped reals is
+\begin{equation*}
+    \beta_b = \frac{1}{b} + \sum_{k \geq 1} \frac{g_b(2k)}{b^{2k}}.
+\end{equation*}
+These constants go as follows:
+\begin{align*}
+    \beta_2 &= 0.84165791317364708989 \\
+    \beta_3 &= 0.62119074589923243760 \\
+    \beta_4 &= 0.48141057151328202149 \\
+    \beta_5 &= 0.39071175514852239829 \\
+    \beta_6 &= 0.32805820924751380527.
+\end{align*}
+
+Conjecture: $g_b(2k) / b^k$ is monotonically decreasing as well. (Probably
+true, just play with the recurrence.) This would give
+\begin{equation*}
+    \beta_b = \frac{1}{b} + O(\sum_{k \geq 1} \frac{1}{b^k}) = O(1/b).
+\end{equation*}
+
+\section{Stopped integers}%
+\label{sec:stopped_integers}
 
 \begin{definition}
-    For any integer $b \geq 2$, say that a finite ``$b$-ary'' tuple $(x_1,
-    \dots, x_n)$ with $x_k \in \{0, 1, \dots, b - 1\}$ is \emph{stopped} at an
-    index $k$ provided that every index in $(k / 2, k]$ is zero. The
-    \emph{stopping time} of such a string is the smallest $k$ such that the
-    string is stopped at $k$, or $\infty$ if no such $k$ exists. The stopping
-    time of an infinite tuple is the stopping time of its shortest stopped
-    prefix, or $\infty$ if no such prefix exists.
+    Say that a positive integer $n$ is \emph{maximally stopped} provided that
+    its binary expansion has stopping time equal to its length.
 \end{definition}
 
-\begin{definition}
-    For any integer $b \geq 2$, let $g_b(n)$ be the number of $b$-ary strings
-    of length $n$ with stopping time $n$.
-\end{definition}
+The maximally stopped integers begin
+\begin{equation*}
+    2, 12, 56, 208, 240, 864, 928, 992, 3392, 3520, 3648, \dots,
+\end{equation*}
+and do not appear in the OEIS.
 
-The same argument used in Theorem~1 (defining, now, $e_0$, $e_1$, and so on up
-to $e_{b - 1}$) will establish the following result.
-
-\begin{theorem}
-\end{theorem}
+??? [I have no idea what to say about these. But look---an integer sequence!]
 
 \end{document}
