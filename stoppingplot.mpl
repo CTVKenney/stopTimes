@@ -88,3 +88,27 @@ m:=nops(L):
 print([seq(evalf(add(l[j],l in L)/m),j=1..n/2 -1, 2)], [seq(evalf(add(l[j],l in L)/m),j=2..n/2-1,2)]):
 listplot([seq(add(l[j],l in L)/m,j=1..n/2 -1, 2)]), listplot([seq(add(l[j],l in L)/m,j=2..n/2-1,2)]):
 end:
+
+integerIsStopped := proc(n)
+    local digits:
+    digits := ListTools[Reverse](convert(n, base, 2)):
+    return evalb(stoppingTime(digits) <= nops(digits)):
+end:
+
+integerIsMaximallyStopped := proc(n)
+    local digits:
+    digits := ListTools[Reverse](convert(n, base, 2)):
+    return evalb(stoppingTime(digits) = nops(digits)):
+end:
+
+a := proc(n)
+    if n = 1 or n = 2 then
+        return 1:
+    fi:
+
+    if n mod 2 = 0 then
+       return 2 * a(n - 1):
+    fi:
+
+    return 2 * a(n - 1) - a((n - 1) / 2):
+end:
