@@ -7,6 +7,7 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
 \newtheorem{corollary}{Corollary}
 
 \theoremstyle{definition}
@@ -18,7 +19,7 @@
 \begin{document}
 \maketitle
 
-\section{Stopped binary strings}%
+\section{Stopped binary strings}
 \label{sec:stopped_binary_strings}
 
 \begin{definition}
@@ -86,10 +87,6 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
     \end{align*}
 \end{theorem}
 
-% Todo
-% Clean this up!
-% Add details!
-% (I [Robert] volunteer to do this.)
 \begin{proof}
     Each nonzero element in $V$ has a final nonzero entry (a one). Let $e_0 \colon V
     \to V$ be a map which inserts a $0$ in the position of this final entry,
@@ -278,13 +275,13 @@ generating function of $g(n)$.
     the ordinary generating function of $g(2k)$. Note that $G(z) = z + A(z^2)$.
 \end{definition}
 
-\begin{lemma}
+\begin{proposition}
     The generating function $A(z)$ is analytic on a disk of radius $1 / 2$
     centered at the origin and satisfies
     \begin{equation*}
         A(z) = \frac{z(1 - A(z^2))}{1 - 2z}.
     \end{equation*}
-\end{lemma}
+\end{proposition}
 
 \begin{proof}
     The equation is a routine computation using the recurrence for $g(2n)$ proved in
