@@ -84,10 +84,10 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
 % Add details!
 % (I [Robert] volunteer to do this.)
 \begin{proof}
-    Each nonzero element in $V$ has a final nonzero entry. Let $e_0 \colon V
+    Each nonzero element in $V$ has a final nonzero entry (a one). Let $e_0 \colon V
     \to V$ be a map which inserts a $0$ in the position of this final entry,
-    shifting the previous entry to the right. Similarly, let $e_1$ insert a $1$
-    into this position. Symbolically,
+    shifting the previous final entry to the right one space. Similarly, let $e_1$ insert a $1$.
+    Symbolically,
     \begin{equation*}
         e_0(b) =
             \begin{cases}
@@ -100,8 +100,8 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
         e_1(b) =
             \begin{cases}
                 (1, 0, 0, \dots) \text{ if } b=0 \\
-                (b_1, ..., b_j, 1, 1, 0,0,...) \text{ if } b = (b_1, ..., b_j, 1, 0, 0, ...)
-            \end{cases}.
+                (b_1, ..., b_j, 1, 1, 0,0,...) \text{ if } b = (b_1, ..., b_j, 1, 0, 0, ...).
+            \end{cases}
     \end{equation*}
     Note that $e_0$ and $e_1$ are injective, $e_0(V) \cap e_1(V) = \emptyset,$
     and $e_0(V) \cup e_1(V) = V.$
@@ -111,7 +111,7 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
         \oct_{2k + 2} \subseteq e_0(\oct_{2k}) \cup e_1(\oct_{2k}).
     \end{equation*}
     Indeed, the final nonzero entry of every string in $\oct_{2k + 2}$ occurs
-    at position $2k + 1$. Removing the immediately preceding entry produces a
+    at position $k + 1$. Removing the immediately preceding entry produces a
     string in $\oct_{2k}$---$e_0$ and $e_1$ simply add the entry back.
 
     In the other direction, for $k \geq 2$ we have
@@ -119,7 +119,7 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
         e_1(\oct_{2k}) \subseteq \oct_{2k + 2},
     \end{equation*}
     because inserting a $1$ into position $k$ will never decrease the stopping
-    time. For \emph{odd} $k \geq 2$ we have
+    time. For \emph{odd} $k \geq 3$ we have
     \begin{equation*}
         e_0(\oct_{2k}) \subseteq \oct_{2k + 2},
     \end{equation*}
@@ -127,7 +127,7 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
     time if the new stopping time \emph{is} $k$; this is impossible if $k$ is
     odd. This shows that
     \begin{equation*}
-        S_{2k + 2} = e_0(S_{2k}) \cup e_1(S_{2k}),
+        \oct_{2k + 2} = e_0(\oct_{2k}) \cup e_1(\oct_{2k}),
     \end{equation*}
     and thus
     \begin{equation*}
@@ -148,9 +148,9 @@ It is clear that $g(n) = |\oct_n|$ for every positive integer $n$.
         \oct_{4k + 2} \cup \oct_{2k}^1 = e_0(\oct_{4k}) \cup e_1(\oct_{4k}).
     \end{equation*}
     (That the left contains the right is clear given the preceding inclusion.
-    For the other direction, the only problem is $\oct_{2k}^1 \subseteq
-    e_0(\oct_{4k}) \cup e_1(\oct_{4k})$. This is easily handled by considering
-    the element immediately preceding the final nonzero element.) Therefore
+    For the other direction, note $\oct_{2k}^1 \subseteq
+    e_0(\oct_{4k})$, since if $(b_1, ..., b_{2k}, 0,0,...) \in \oct_{2k}$ then
+    $(b_1, ..., b_{2k-1},1,0,0,...)$ has stopping time precisely $4k$.) Therefore
     \begin{equation*}
         g(4k + 2) + |\oct_{2k}^1| = 2 g(4k),
     \end{equation*}
