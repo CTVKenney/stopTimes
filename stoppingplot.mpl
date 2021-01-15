@@ -128,3 +128,29 @@ a := proc(n)
 
     return 2 * a(n - 1) - a((n - 1) / 2):
 end:
+
+g := proc(b, n)
+    if n = 1 then
+        return 1:
+    fi:
+
+    if n = 2 then
+        return b - 1:
+    fi:
+
+    if n = 4 then
+        return (b - 1)^2:
+    fi:
+
+    if n mod 4 = 0 then
+        return b * g(b, n - 2):
+    fi:
+
+    if n mod 4 = 2 then
+        return b * g(b, n - 2) - (b - 1) * g(b, (n - 2) / 2):
+    fi:
+
+    return 0:
+end:
+
+s := (b, n) -> add(g(b, k) / b^k, k=1..n):
