@@ -381,17 +381,76 @@ These seem to be decreasing, and indeed they are, down to 0.
 \section{Stopped integers}
 \label{sec:stopped_integers}
 
+In this section we define a few integer sequences all related to stopped binary
+strings. They are the \emph{maximally stopped} and \emph{prestopped} integers.
+
 \begin{definition}
     Say that a positive integer $n$ is \emph{maximally stopped} provided that
     its binary expansion has stopping time equal to its length.
+\end{definition}
+
+\begin{definition}
+    Say that a positive integer $n$ is \emph{prestopped} if its binary
+    expansion has length $k$ and is the prefix of a binary string with stopping
+    time $2k$. In other words, the binary expansion has length $k$, is not
+    stopped, and has stopping time $2k$ if padded it with enough zeros.
 \end{definition}
 
 The maximally stopped integers begin
 \begin{equation*}
     2, 12, 56, 208, 240, 864, 928, 992, 3392, 3520, 3648, \dots,
 \end{equation*}
-and do not appear in the OEIS.
+and the prestopped integers begin
+\begin{equation*}
+    \dots
+\end{equation*}
+Neither appear in the OEIS.
 
-??? [I have no idea what to say about these. But look---an integer sequence!]
+\begin{definition}
+    Let $M(x)$ be the number of maximally stopped integers $\leq x$.
+\end{definition}
 
+\begin{proposition}
+    The counting function $M(x)$ satisfies
+    \begin{equation*}
+        M(x) = \Theta(\sqrt{x}).
+    \end{equation*}
+    That is, $c \sqrt{x} \leq M(x) \leq C \sqrt{x}$ for some constants $c$ and
+    $C$ and all $x > 0$. In particular, the maximally stopped integers have
+    natural density $0$, i.e., $\lim_{x \to \infty} M(x) / x = 0$.
+\end{proposition}
+
+\begin{proof}
+    Since $M(x) = M(\lfloor x \rfloor) + \Theta(1)$, suppose that $x$ is an
+    integer and write $x = 2^m + k$ for an integer $m \geq 0$ and $0 \leq k <
+    2^m$. Every maximally stopped integer not exceeding $x$ has a binary
+    expansion with length not exceeding $m + 1$. Conversely, every such binary
+    string corresponds to a unique maximally stopped integer. Every such string
+    with length less than $m + 1$ corresponds to an integer $< x$, so
+    \begin{equation*}
+        M(x) \geq \sum_{k < m + 1} g(k).
+    \end{equation*}
+    On the other hand, every integer counted by $M(x)$ has length $\leq m + 1$,
+    so
+    \begin{equation*}
+        M(x) \leq \sum_{k \leq m + 1} g(k).
+    \end{equation*}
+    Since $g(2k) = \Theta(2^k)$, the upper bound and lower bounds are both
+    $\Theta(2^{m / 2}) = \Theta(\sqrt{x})$. For example,
+    \begin{equation*}
+        \sum_{k \leq m + 1} g(k) = \Theta(1) + \Theta(\sum_{k \leq (m + 1) / 2} 2^k) = \Theta(2^{m / 2}) = \Theta(\sqrt{x}).
+    \end{equation*}
+    It follows that $M(x) = \Theta(\sqrt{x})$. This implies $M(x) / x =
+    O(x^{-1/2})$, so $M(x) / x \to 0$ as $x \to \infty$.
+\end{proof}
+
+An easy corollary of this result is that the maximally stopped integers grow
+like squares. That is, the $n$th maximally stopped integer is $\Theta(n^2)$. To
+establish, say, the lower bound, let $m$ be the $n$th maximally stopped
+integer, and note that
+\begin{equation*}
+    n = M(m) \leq c \sqrt{m}
+\end{equation*}
+for some constant $c$. Then $m \geq n^2 / c^2$, and the upper bound is the same
+except for the constant.
 \end{document}
