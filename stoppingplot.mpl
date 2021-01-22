@@ -90,6 +90,15 @@ plotheights:=proc(n) local i, L, str, allStrings:
     pointplot(L,symbol=point):
 end:
 
+#Inputs n, outputs list [(x_1,y_1), (x_2,y_2), ...] of points to plot, where
+#the x's consist of b^n evenly spaced b-ary points in [0,1), and
+#y's give the stopping time of the b-ary sequence associated to the x's. 
+plotBaseHeights:=proc(b, c, n) local i, L, str, allStrings:
+    allStrings := baseStrings(b, n):
+    L:=[seq([add(str[i]*b^(-i),i=1..n),stoppingTime(str)],str in allStrings )]:
+    pointplot(L,symbol=point, color=c):
+end:
+
 # Generate the average point of all length n strings with stopping time n.
 avgPositions:=proc(n) option remember:
     local stopped:
@@ -105,17 +114,60 @@ print([seq(evalf(add(l[j],l in L)/m),j=1..n/2 -1, 2)], [seq(evalf(add(l[j],l in 
 listplot([seq(add(l[j],l in L)/m,j=1..n/2 -1, 2)]), listplot([seq(add(l[j],l in L)/m,j=2..n/2-1,2)]):
 end:
 
-integerIsStopped := proc(n)
+isStopped := proc(n)
     local digits:
     digits := ListTools[Reverse](convert(n, base, 2)):
     return evalb(stoppingTime(digits) <= nops(digits)):
 end:
 
-integerIsMaximallyStopped := proc(n)
+isMaximallyStopped := proc(n)
     local digits:
     digits := ListTools[Reverse](convert(n, base, 2)):
     return evalb(stoppingTime(digits) = nops(digits)):
 end:
+
+isPreStopped := proc(n)
+    local digits:
+    digits := ListTools[Reverse](convert(n, base, 2)):
+    return evalb(stoppingTime(digits) = 2 * nops(digits)):
+end:
+
+# Select the first n positive integers k such that f(k) is true.
+# (Assuming that there *are* n such positive integers!)
+computeTerms := proc(f, n)
+    local terms, k:
+    terms := []:
+    k := 1:
+
+    while nops(terms) < n do
+        if f(k) then
+            terms := [op(terms), k]:
+        fi:
+
+        k := k + 1:
+    od:
+
+    terms:
+end:
+
+# Select the positive integers k <= n such that f(k) is true.
+piTerms := proc(f, n)
+    select(f, [seq(k, k=1..n)]):
+end:
+
+# Compute the first n maximally stopped integers.
+maximallyStopped := n -> computeTerms(isMaximallyStopped, n):
+
+piMaximallyStopped := n -> piTerms(isMaximallyStopped, n):
+
+# Compute the first n maximally stopped integers.
+piPreStopped := n -> piTerms(isPreStopped, n):
+
+# Compute the first n prestopped integers.
+preStopped := n -> computeTerms(isPreStopped, n):
+
+# Compute the first n stopped integers.
+preStopped := n -> computeTerms(isStopped, n):
 
 a := proc(n) option remember:
     if n = 1 or n = 2 then

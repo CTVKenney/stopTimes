@@ -289,7 +289,7 @@ For example, using the first $99$ terms ($n = 100$) will give an error of no
 more than
 \begin{equation*}
     \frac{22284668265087}{158456325028528675187087900672}
-    \approx 0.1406360286 \times 10^{-15}.
+    \approx 1.406360286 \times 10^{-16}.
 \end{equation*}
 
 The constant $\beta_2$ seems new. Accordingly, we conjecture that it is
@@ -323,7 +323,7 @@ generating function of $g(n)$.
     \begin{align*}
         \sum_{k \geq 1} a(k) z^k
             &= \sum_{k \geq 1} a(2k) z^{2k} + \sum_{k \geq 0} a(2k + 1) z^{2k + 1} \\
-            &= \sum_{k \geq 1} 2 a(2k - 2) z^{2k} + a(1) z + \sum_{k \geq 1} (2a(2k) - a(k)) z^{2k + 1} \\
+            &= \sum_{k \geq 1} 2 a(2k - 1) z^{2k} + a(1) z + \sum_{k \geq 1} (2a(2k) - a(k)) z^{2k + 1} \\
             &= 2 z \sum_{k \geq 0} a(2k + 1) z^{2k + 1} + 2 z \sum_{k \geq 1} a(2k) z^{2k} - z A(z^2) + z \\
             &= 2z A(z) + z(1 - A(z^2)).
     \end{align*}
