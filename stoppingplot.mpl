@@ -117,7 +117,7 @@ integerIsMaximallyStopped := proc(n)
     return evalb(stoppingTime(digits) = nops(digits)):
 end:
 
-a := proc(n)
+a := proc(n) option remember:
     if n = 1 or n = 2 then
         return 1:
     fi:
