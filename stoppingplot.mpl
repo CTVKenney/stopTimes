@@ -181,7 +181,7 @@ a := proc(n) option remember:
     return 2 * a(n - 1) - a((n - 1) / 2):
 end:
 
-g := proc(b, n)
+g := proc(b, n) option remember:
     if n = 1 then
         return 1:
     fi:
@@ -206,3 +206,4 @@ g := proc(b, n)
 end:
 
 s := (b, n) -> add(g(b, k) / b^k, k=1..n):
+sf := (b, n) -> add(evalf(g(b, k) / b^k), k=1..n):
