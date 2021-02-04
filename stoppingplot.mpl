@@ -150,7 +150,7 @@ computeTerms := proc(f, n)
 end:
 
 # Select the positive integers k <= n such that f(k) is true.
-piTerms := proc(f, n)
+piTerms := proc(f, n) local k:
     select(f, [seq(k, k=1..n)]):
 end:
 
