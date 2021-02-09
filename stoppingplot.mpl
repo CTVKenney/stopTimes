@@ -110,8 +110,7 @@ end:
 recAvgPositions:=proc(n) local l,L,m,j:
 L:=recStoppedStrings(n)[(n/2)+1]: #The strings of length n stopped at time n
 m:=nops(L):
-print([seq(evalf(add(l[j],l in L)/m),j=1..n/2 -1, 2)], [seq(evalf(add(l[j],l in L)/m),j=2..n/2-1,2)]):
-listplot([seq(add(l[j],l in L)/m,j=1..n/2 -1, 2)]), listplot([seq(add(l[j],l in L)/m,j=2..n/2-1,2)]):
+[seq(evalf(add(l[j],l in L)/m),j=1..n/2 -1)]:
 end:
 
 isStopped := proc(n)
@@ -151,7 +150,7 @@ computeTerms := proc(f, n)
 end:
 
 # Select the positive integers k <= n such that f(k) is true.
-piTerms := proc(f, n)
+piTerms := proc(f, n) local k:
     select(f, [seq(k, k=1..n)]):
 end:
 
@@ -203,6 +202,10 @@ g := proc(b, n) option remember:
     fi:
 
     return 0:
+end:
+
+s := proc(b, n) local k:
+add(g(b, k) / b^k, k=1..n):
 end:
 
 s := (b, n) -> add(g(b, k) / b^k, k=1..n):

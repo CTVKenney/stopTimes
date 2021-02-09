@@ -1,0 +1,22 @@
+\documentclass{amsart}
+\begin{document}
+Let's take as given that $T_n \leq \frac{165}{2048} \cdot 2^n.$
+Then: \\ \\
+\textit{Claim:} For $n \geq 32,$ $T_n/2^n - \frac{160}{2048} \geq 0.2 \cdot (\sqrt{2})^{-n}.$ \footnote{Don't worry too much about the `32' and the `0.2'. They just happen to make it work.} In particular $T_n > \frac{160}{2048} \cdot 2^n.$ \\ \\
+\textit{Pf.} By induction. For a base case, note that $$T_{32}/2^{32} - 160/2048 \geq 0.001,$$ while $$0.2\cdot (\sqrt{2})^{-32} \leq 0.00001.$$
+Now, for the inductive step. Notice that the ratio $$\frac{T_{2n}}{2^{2n}} = \frac{T_{2n-1}}{2^{2n-1}},$$ so there's nothing to prove in the $2n-1 \to 2n$ inductive case.
+So, for the interesting inductive case, \emph{assume} $$\frac{T_{2n}}{2^{2n}} - \frac{160}{2048} \geq 0.2 \cdot (\sqrt{2})^{-2n}.$$
+Then:
+\begin{align}
+\frac{T_{2n+1}}{2^{2n+1}} &= \frac{2 T_{2n}-T_n}{2(2^{2n})} \\
+&\geq \left(\frac{160}{2048} + 0.2\cdot  (\sqrt{2})^{-2n} \right) - \frac{T_n}{2^{2n+1}} \\
+&= \frac{160}{2048} + 0.2 \cdot 2^{-n} - \frac{T_n}{2^{2n+1}} \\
+& \nonumber \\
+&\geq \frac{160}{2048} + \left(0.2 \cdot 2^{-n} - \frac{\frac{165}{2048}\cdot 2^n}{2^{2n+1}} \right) \\
+&\geq \frac{160}{2048} + 0.2 \cdot (\sqrt{2})^{-2n-1}.
+\end{align}
+Here (1) is by the recursion relation, (2) is inductive hypothesis, (4) is our assumed \emph{upper bound} for $T_n$, and (5) is a calcluation.
+
+
+$$\frac{k^{m+n}|A|^2}{|X|} \geq k^{m+n}|A|$$
+\end{document}
