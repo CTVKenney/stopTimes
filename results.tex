@@ -40,7 +40,7 @@
 inventor's extolments, management is skeptical. They subject the machine to a
 rigorous \emph{testing} process: Once a week, an inspector will visit the
 machine and mark down a $1$ if a problem is detected, and a $0$ otherwise. The
-first time the machine passes exactly half of its total inspections,
+first time the machine \emph{consecutively} passes half of the total number of inspections,
 inspections will cease. This process creates a \emph{binary string}, and the
 question at hand is whether it ends in sufficiently many $0$'s to denote a
 successful testing regimen. We call such successful binary string
@@ -63,10 +63,10 @@ The motivating result for this paper is that the number of binary sequences of
 length $2n$ with stopping time $2n$ equals the $n$th Narayana--Zidek--Cappel
 number $T_n$, defined by the recurrence
 \begin{align*}
-    T_1 &= 1 \\
-    T_2 &= 1 \\
-    T_{2n} &= 2 T_{2n - 1} \\
-    T_{2n + 1} &= 2 T_{2n} - T_n.
+    T_1 &= 1 & \\
+    T_2 &= 1 & \\
+    T_{2n} &= 2 T_{2n - 1} &(n \geq 2)\\
+    T_{2n + 1} &= 2 T_{2n} - T_n  &(n \geq 1).
 \end{align*}
 This sequence is A2083 in the OEIS \cite{oeis}. It originates from
 \cite{capell1970knock}, where the authors show that $T_n$ enumerates the number
@@ -88,14 +88,14 @@ binary expansions are ``stopped,'' and considers the measure of this set.
 Section~\ref{sec:integers} gives two new integer sequences and discusses their
 natural densities.
 
-\section{Counting stopped binary strings}%
+\section{Counting stopped binary strings}
 \label{sec:recs}
 
 Let $g(n)$ be the number of binary strings of length $n$ with stopping time
 $n$. Since stopping times are even except for $1$, we know that $g(n)$ is zero
 for all odd $n$ except $n = 1$, where $g(1) = 1$. Thus the interesting sequence
-is $a(n) = g(2n)$, which we will show (in two ways!) equals the
-Narayana--Zidek--Capell numbers.
+is $g(2n)$, which we will show (in two ways!) equals the
+Narayana--Zidek--Capell sequence $T_n$.
 
 It is convenient to work with \emph{infinite} binary strings which are nonzero
 in only finitely many places. This is equivalent to studying finite binary
@@ -112,7 +112,7 @@ stopping time when considered as a sufficiently long, finite binary string.
     $1$, and only finitely many are $1$. For each positive integer $k$, let
     $\oct_k$ be the set of elements of $V$ which are zero beyond position $k$
     and, when the first $k$ entries are regarded as a finite binary string,
-    they have stopping time $k$. That is, $\oct_1 = \{0\} \subset V$,
+    they have stopping time $k$. \footnote{As a result, all entries after $k/2$ are 0} That is, $\oct_1 = \{0\} \subset V$,
     \begin{equation*}
         \oct_{2k} = \{v \in V : \forall j > k, v_j = 0, \text{ and } v \text{ has stopping time } 2k \}
     \end{equation*}
@@ -133,7 +133,7 @@ Note that $g(n) = |\oct_n|$ for every positive integer $n$.
 First, we will prove this directly from our definitions.
 
 \begin{proof}
-    Each nonzero element in $V$ has a final nonzero entry (a $1$). Let $e_0
+    Each nonzero element in $V$ has a final nonzero entry (equal to $1$). Let $e_0
     \colon V \to V$ be a map which inserts a $0$ in the position of this final
     entry, shifting the previous final entry to the right one space. Similarly,
     let $e_1$ insert a $1$. Symbolically,
@@ -182,7 +182,7 @@ First, we will prove this directly from our definitions.
     \begin{equation*}
         g(2k + 2) = 2 g(2k)
     \end{equation*}
-    for $k$ odd.
+    for $k \geq 3$ odd.
 
     To handle the even case, let
     \begin{equation*}
@@ -213,7 +213,7 @@ First, we will prove this directly from our definitions.
 Now we will prove our theorem combinatorially by relating our sequence to a
 certain class of compositions. Recall that a \emph{composition} of an integer
 $n$ is a vector in $(\Z_{>0})^m$, for some $m \in \{1,2,...,n\},$ whose
-components add to $n$. The $n$th Narayana-Zidek-Capell number, $a(n)$, is the
+components add to $n$. The $n$th Narayana-Zidek-Capell number, $T_n$, is the
 cardinality of the set
 \begin{align*}
     R_n = \left\{ \text{Compositions } p \text{ of } n \text{ satisfying } p_1 = 1 \text{ and } p_k \leq \sum_{j=1}^{k-1} p_j \right\}.
@@ -227,7 +227,7 @@ cardinality of the set
         F(p) = (f(p_1), f(p_2), ..., f(p_m), 0,0,...),
     \end{align*}
     concatenated in the natural way, with a tail of zeroes appended at the end.
-    Then $F: R_n \overset{\sim}{\to} \oct_{2n}$ is a bijection, so $|\oct_{2n}| = g(2n) = a(n).$
+    Then $F: R_n \overset{\sim}{\to} \oct_{2n}$ is a bijection, so $|\oct_{2n}| = g(2n) = T_n.$
     Indeed, if $p \in R_n$, then since $\sum_{j=1}^{m} p_j = n,$ the final nonzero entry in $F(p)$ is in spot $n$. Thus
     $F(p)$ is stopped at time $2n$, and is not stopped at time $t$ for any $t \in [n,2n-1].$
     And if the zeroes from $f(p_r)$ in $F(p)$ caused $F(p)$ to be stopped at some time $t \leq n-1,$
@@ -247,13 +247,17 @@ cardinality of the set
 \end{proof}
 
 A slightly different recurrence holds for arbitrary bases. Let $g_b(n)$ be the
-number of $b$-ary strings of length $n$ with stopping time $n$. Then
+number of $b$-ary strings of length $n$ with stopping time $n$. Again, stopping time $n$ 
+means that all entries with indices in $(n/2, n]$ are 0, but for $1\leq m<n,$ some entry in $(m/2, m]$ is nonzero.
+In the experimental machine example, this corresponds to the case where there are $b-1$ distinct errors the machine
+could throw in any given week.
+Then
 \begin{align*}
-    g_b(1) &= 1 \\
-    g_b(2) &= b - 1 \\
-    g_b(4) &= (b - 1)^2 \\
-    g_b(4n) &= b g_b(4n - 2) \\
-    g_b(4n + 2) &= b g_b(4n) - (b - 1) g_b(2n).
+    g_b(1) &= 1  &\\
+    g_b(2) &= b - 1  &\\
+    g_b(4) &= (b - 1)^2  &\\
+    g_b(4n) &= b g_b(4n - 2)  &(n \geq 2)\\
+    g_b(4n + 2) &= b g_b(4n) - (b - 1) g_b(2n) &(n \geq 1).
 \end{align*}
 
 For convenience, let $r_b(n) = g_b(2n)$, so that the recurrences read
@@ -265,7 +269,7 @@ For convenience, let $r_b(n) = g_b(2n)$, so that the recurrences read
 \end{align*}
 
 The sequences $r_b(n)$ seem new for $b \geq 3$ in the sense that they do not
-appear in the OEIS. All $r_b(n)$ satisfy the following ``meta-Fibonacci''
+appear in the OEIS. All $r_b(n)$ satisfy the following scaled-meta-Fibonacci
 property.
 
 \begin{proposition}
@@ -295,7 +299,7 @@ $p(n)$-Fibonacci if
 \begin{equation*}
     a(n) = \sum_{k = 1}^{p(n)} a(n - k).
 \end{equation*}
-Our previous proposition shows that $r_2(n)$, the Narayana--Zidek--Capell
+Our previous proposition shows that $T_n = r_2(n)$, the Narayana--Zidek--Capell
 numbers, is a meta-Fibonacci sequence. This fact is well-known and can be used
 to show that $r_2(n) / 2^n$ converges to a positive constant (see
 \cite{emerson2005family}). However, sequences of the form
@@ -329,9 +333,9 @@ seem to be unstudied for $\alpha \neq 1$.
 
 Our proposition implies that $g_b(2n) / b^n$ converges to some nonnegative
 constant, and we suspect that it is a \emph{positive} constant. As we have
-said, the case $b = 2$ generates the Narayana--Zidek--Capell numbers $a(n)$,
-and it is well-known that $a(n) / 2^n$ converges to a positive constant. See,
-for example, Capel and Narayana original paper \cite{capell1970knock}, or
+said, the case $b = 2$ generates the Narayana--Zidek--Capell numbers $T_n$,
+and it is well-known that $T_n / 2^n$ converges to a positive constant. See,
+for example, Capell and Narayana's original paper \cite{capell1970knock}, or
 Emerson's argument in \cite{emerson2005family}. (According to the OEIS, the
 constant is exactly twice the Atkinson-Negro-Santoro constant given in Section
 2.28 of Finch's book of mathematical constants \cite{finch2003mathematical}.)
@@ -339,25 +343,49 @@ constant is exactly twice the Atkinson-Negro-Santoro constant given in Section
 \section{Stopped reals in the unit interval}
 \label{sec:reals}
 
-Every element of the unit interval $[0, 1]$ can be regarded, via its binary
-expansion, as an infinite binary string, i.e., an element of $\Z / 2 Z \times
-\Z / 2Z \times \cdots$. This differs from the set $V$ of the previous section
-by allowing potentially infinitely many nonzero entries. For example, the real
-\begin{equation*}
-    (0.1010101010101\dots)_2 = \frac{2}{3}
-\end{equation*}
-is perfectly well-defined, but not as a member of $\bigoplus_{k = 1}^\infty (\Z
-/ 2 \Z)$. In this way, it makes since to discuss stopped \emph{reals},
-considering each real as an infinite binary string. (We shall interchangably
-refer to reals as both strings and numbers.) Our focus now becomes
-\emph{topological} as we examine the \emph{set} of stopped reals in the unit
-interval.
+
+%Every element of the unit interval $[0, 1]$ can be regarded, via its binary
+%expansion, as an infinite binary string, i.e., an element of $\Z / 2 Z \times
+%\Z / 2Z \times \cdots$. This differs from the set $V$ of the previous section
+%by allowing potentially infinitely many nonzero entries. For example, the real
+%\begin{equation*}
+%    (0.1010101010101\dots)_2 = \frac{2}{3}
+%\end{equation*}
+%is perfectly well-defined, but not as a member of $\bigoplus_{k = 1}^\infty (\Z
+%/ 2 \Z)$. In this way, it makes since to discuss stopped \emph{reals},
+%considering each real as an infinite binary string. (We shall interchangably
+%refer to reals as both strings and numbers.) Our focus now becomes
+%\emph{topological} as we examine the \emph{set} of stopped reals in the unit
+%interval.
+
+%%%I'm writing my version of this introduction. You can take a look at both versions
+%%%and see what parts you'd like to keep of each. -Charlie
+
+Suppose we choose a binary string $(0.b_1 b_2 b_3 b_4 ...)_2$ uniformly at random; that is,
+each bit $b_i$ has an equal probability of being 0 or 1, independently of all the others. 
+What is the probability that the resulting sequence has finite stopping time? There is a great chance
+it will be stopped early, by picking $b_1=0, b_2=0,$ or $b_3 b_4 = 00.$ On the other hand, the longer the string
+$(0.b_1 b_2 b_3 ... b_k ...)_2$ becomes without being stopped, 
+the less likely $b_{k+1}$ is to make it stop.
+There are two salient differences between considering stopping times for binary (and later $b$-ary)
+sequences, and stopping times in $\oplus_{i=1}^\infty (\Z/2\Z).$ 
+\begin{enumerate}
+\item Binary sequences
+most likely never terminate. 
+\item A real number in $[0,1]$ can have more than one binary expansion,
+one of which is stopped (by an infinite tail of 0s), the other of which may or may not be (with an infinite tail of 1s).
+\end{enumerate}
+Since the definition of ``stopped at time $k$'' depends only on the first $k$ bits in the expansion,
+(1) won't cause trouble, and in fact leads to our probabilistic questions.
+(2) is innocuous as well, at least for questions of probability: the set of \emph{dyadic} rationals
+in $[0,1]$, i.e. those which have two distinct binary expansions, has measure 0.
+However, to avoid confusion, all definitions that follow use the terminating binary expansion, when the two disagree.
 
 \begin{definition}
     Let $S_k$ be the set of reals in $[0, 1]$ which have stopping time $k$ when
     regarded as an infinite binary string. Membership in this set is determined
     by examining only the first $k$ bits of a binary expansion, so $S_k$ is
-    measureable. Let $S = \cup_{k \geq 1} S_k$ be the set of all stopped reals
+    measureable (in fact, it is a union of half-open dyadic intervals). Let $S = \cup_{k \geq 1} S_k$ be the set of all stopped reals
     in $[0, 1]$, which is measurable since the $S_k$ are.
 \end{definition}
 
@@ -375,7 +403,10 @@ compute the following sets:
     S_8 = [13/16, 209/256) &\cup [15/16, 241/256).
 \end{align*}
 
-[Insert the stopping time plot somewhere around here.]
+\begin{figure}
+\includegraphics[width=0.7\textwidth]{fig1.png}
+\caption{Plot of binary sequence stopping times. Stopping times take values in $[0,\infty].$}
+\end{figure}
 
 This simple description of $S_k$ gives us a nice expression for the measure of
 $S$.
@@ -395,8 +426,8 @@ $S$.
     immediately.
 \end{proof}
 
-In the previous section we established that the sequence $a(n) = g(2n)$ is
-A2083 in the OEIS. It is known that $a(n) = O(2^n)$, so the above series
+In the previous section we established that the sequence $T_n = g(2n)$ is
+A2083 in the OEIS. It is known that $T_n = O(2^n)$, so the above series
 converges very quickly. Using the recurrence of the previous section to
 generate the first hundred terms of $g(2k)$ it is easy to approximate the sum
 and provide rigorous lower bounds. To get more rigorous upper bounds, first
@@ -431,9 +462,9 @@ function of $g(n)$.
     \end{equation*}
     be the ordinary generating function of $g(n)$, and
     \begin{equation*}
-        A(z) = \sum_{k \geq 1} g(2k) z^k
+        A(z) = \sum_{k \geq 1} T_k z^k
     \end{equation*}
-    the ordinary generating function of $g(2k)$. Note that $G(z) = z + A(z^2)$.
+    the ordinary generating function of $T_k$. Note that $G(z) = z + A(z^2)$.
 \end{definition}
 
 \begin{proposition}
@@ -445,16 +476,16 @@ function of $g(n)$.
 \end{proposition}
 
 \begin{proof}
-    The equation is a routine computation using the recurrence for $g(2n)$ proved in
-    the previous section. For convenience, let $a(n) = g(2n)$. Then:
+    The equation is a routine computation using the recurrence for the Narayana-Zidek-Capell numbers proved in
+    the previous section. We have:
     \begin{align*}
-        \sum_{k \geq 1} a(k) z^k
-            &= \sum_{k \geq 1} a(2k) z^{2k} + \sum_{k \geq 0} a(2k + 1) z^{2k + 1} \\
-            &= \sum_{k \geq 1} 2 a(2k - 1) z^{2k} + a(1) z + \sum_{k \geq 1} (2a(2k) - a(k)) z^{2k + 1} \\
-            &= 2 z \sum_{k \geq 0} a(2k + 1) z^{2k + 1} + 2 z \sum_{k \geq 1} a(2k) z^{2k} - z A(z^2) + z \\
+        \sum_{k \geq 1} T_k z^k
+            &= \sum_{k \geq 1} T_{2k} z^{2k} + \sum_{k \geq 0} T_{2k+1} z^{2k + 1} \\
+            &= \sum_{k \geq 1} 2 T_{2k-1} z^{2k} + T_1 z + \sum_{k \geq 1} (2T_{2k} - T_k) z^{2k + 1} \\
+            &= 2 z \sum_{k \geq 0} T_{2k+1} z^{2k + 1} + 2 z \sum_{k \geq 1} T_{2k} z^{2k} - z A(z^2) + z \\
             &= 2z A(z) + z(1 - A(z^2)).
     \end{align*}
-    Solving this for $A(z)$ yields the result. Since $a(n) =
+    Solving this for $A(z)$ yields the result. Since $T_n =
     O(2^n)$, we see that $A(z)$ converges everywhere that $\sum_{k \geq 0} (2z)^k = (1 -
     2z)^{-1}$ does, which is at least a disk of radius $1/2$.
 \end{proof}
@@ -468,23 +499,25 @@ $G(z)$ are algebraic.
 
 Expanding reals in $[0, 1]$ with different bases yields different ``stopped
 sets'' and different measures. The same arguments apply, except now the measure
-of the $S_k$ will be $g_b(k) / b^k$. Thus, the measure of the set of $b$-ary
+of the $S_{b,k}$ will be $g_b(k) / b^k$. Thus, the measure of the set of $b$-ary
 stopped reals is
 \begin{equation*}
     \beta_b = \frac{1}{b} + \sum_{k \geq 1} \frac{g_b(2k)}{b^{2k}}.
 \end{equation*}
 These constants go as follows:
 \begin{align*}
-    \beta_2 &= 0.84165791317364708989 \\
-    \beta_3 &= 0.62119074589923243760 \\
-    \beta_4 &= 0.48141057151328202149 \\
-    \beta_5 &= 0.39071175514852239829 \\
-    \beta_6 &= 0.32805820924751380527.
+    \beta_2 &\approx 0.84165791317364708989 \\
+    \beta_3 &\approx 0.62119074589923243760 \\
+    \beta_4 &\approx 0.48141057151328202149 \\
+    \beta_5 &\approx 0.39071175514852239829 \\
+    \beta_6 &\approx 0.32805820924751380527.
 \end{align*}
 These seem to be decreasing, and indeed they are, down to 0.
-
+(As the number of possible errors for the experimental machine increases, the probability
+that it will run $n/2$ consecutive errorless weeks tends to 0.)
 % TODO
 % Conjecture: \beta_b = 2 / b + O(1/b^n) for all n.
+% It would probably be better to re-write this section with more of a probabilistic flavor.
 \begin{theorem}
     For $b \geq 2$,
     \begin{equation*}
