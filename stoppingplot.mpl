@@ -168,7 +168,7 @@ preStopped := n -> computeTerms(isPreStopped, n):
 # Compute the first n stopped integers.
 preStopped := n -> computeTerms(isStopped, n):
 
-a := proc(n)
+a := proc(n) option remember:
     if n = 1 or n = 2 then
         return 1:
     fi:
@@ -180,7 +180,7 @@ a := proc(n)
     return 2 * a(n - 1) - a((n - 1) / 2):
 end:
 
-g := proc(b, n)
+g := proc(b, n) option remember:
     if n = 1 then
         return 1:
     fi:
@@ -207,3 +207,6 @@ end:
 s := proc(b, n) local k:
 add(g(b, k) / b^k, k=1..n):
 end:
+
+s := (b, n) -> add(g(b, k) / b^k, k=1..n):
+sf := (b, n) -> add(evalf(g(b, k) / b^k), k=1..n):
