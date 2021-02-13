@@ -5,9 +5,7 @@
 \newcommand*\oct{\vcenter{\hbox{\includegraphics[width=.9em]{octagon.png}}}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\Z}{\mathbb{Z}}
-
-\bibliography{cite}
-\bibliographystyle{plain} 
+\usepackage[]{hyperref}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -72,12 +70,12 @@ This sequence is A2083 in the OEIS \cite{oeis}. It originates from
 \cite{capell1970knock}, where the authors show that $T_n$ enumerates the number
 of random knock-out tournaments with $n$ players.
 
-Our definition of a stopped string, and indeed any condition on binary
-sequences, suggests various integer sequences and sets of reals by passing to
-the relevant binary expansions. The definition also generalizes to bases other
-than $2$, the only change being that any occurrence of ``$1$'' should be
-replaced with ``any nonzero digit.'' For simplicity we will sometimes prove the
-binary results and merely quote the generalizations.
+Alongside this result, our definition of a stopped string generalizes to
+various integer sequences and sets of reals by passing to the relevant binary
+expansions. The definition also generalizes to bases other than $2$, the only
+change being that any occurrence of ``$1$'' should be replaced with ``any
+nonzero digit.'' This leads to an infinite family of sets, integer sequences,
+and so on.
 
 The rest of this paper is organized as follows. Section~\ref{sec:recs}
 establishes the identity between the number of stopped binary strings and the
@@ -302,7 +300,7 @@ $p(n)$-Fibonacci if
 Our previous proposition shows that $T_n = r_2(n)$, the Narayana--Zidek--Capell
 numbers, is a meta-Fibonacci sequence. This fact is well-known and can be used
 to show that $r_2(n) / 2^n$ converges to a positive constant (see
-\cite{emerson2005family}). However, sequences of the form
+\cite{emerson2006family}). However, sequences of the form
 \begin{equation*}
     a(n) = \alpha \sum_{k = 1}^{p(n)} a(n - k)
 \end{equation*}
@@ -333,10 +331,10 @@ seem to be unstudied for $\alpha \neq 1$.
 
 Our proposition implies that $g_b(2n) / b^n$ converges to some nonnegative
 constant, and we suspect that it is a \emph{positive} constant. As we have
-said, the case $b = 2$ generates the Narayana--Zidek--Capell numbers $T_n$,
-and it is well-known that $T_n / 2^n$ converges to a positive constant. See,
-for example, Capell and Narayana's original paper \cite{capell1970knock}, or
-Emerson's argument in \cite{emerson2005family}. (According to the OEIS, the
+said, the case $b = 2$ generates the Narayana--Zidek--Capell numbers $T_n$, and
+it is well-known that $T_n / 2^n$ converges to a positive constant. See, for
+example, Capell and Narayana's original paper \cite{capell1970knock}, or
+Emerson's argument in \cite{emerson2006family}. (According to the OEIS, the
 constant is exactly twice the Atkinson-Negro-Santoro constant given in Section
 2.28 of Finch's book of mathematical constants \cite{finch2003mathematical}.)
 
@@ -654,5 +652,8 @@ irrational or transcendental?
 The prestopped integers introduced in Section~\ref{sec:integers} do not have
 natural density zero. Do they have \emph{any} natural density? If not, what are
 their upper and lower natural densities?
+
+\bibliographystyle{unsrt}
+\bibliography{cite}
 
 \end{document}
