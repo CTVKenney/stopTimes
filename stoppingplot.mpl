@@ -81,6 +81,49 @@ od:
 L:
 end:
 
+# Compute the smallest T such that s[j] = 0 for all j in (T - T / k, T],
+# assuming that s is the prefix of an infinitely long string of 0's.
+KStoppingTime := proc(s, k)
+    j := 0:
+    stopped := false:
+    zeroCount := 0:
+
+    while not stopped do
+        j := j + 1:
+        if j > nops(s) then
+            digit := 0:
+        else
+            digit := s[j]:
+        fi:
+
+        if digit = 0 then
+            zeroCount := zeroCount + 1:
+        else
+            zeroCount := 0:
+        fi:
+
+        # Length of interval (j - j / k, j] is
+        # j - floor(j - j / k) = -floor(-j / k)
+        #                      = ceil(j / k).
+        if zeroCount >= ceil(j / k) then
+            stopped := true:
+        fi:
+    od:
+
+    j:
+end:
+
+# Generate all base-b strings of length L with k-stopping time n.
+KStoppedBaseStrings:=proc(b, k, n)
+    select(s -> KStoppingTime(s, k) = n, baseStrings(b, n)):
+end:
+
+# Generate all base-b strings of length L with k-stopping time n.
+countKStoppedBaseStrings:=proc(b, k, n)
+    option remember:
+    nops(KStoppedBaseStrings(b, k, n)):
+end:
+
 #Inputs n, outputs list [(x_1,y_1), (x_2,y_2), ...] of points to plot, where
 #the x's consist of 2^n evenly spaced binary points in [0,1), and
 #y's give the stopping time of the binary sequence associated to the x's. 
