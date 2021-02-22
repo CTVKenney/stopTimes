@@ -341,7 +341,6 @@ constant is exactly twice the Atkinson-Negro-Santoro constant given in Section
 \section{Stopped reals in the unit interval}
 \label{sec:reals}
 
-
 %Every element of the unit interval $[0, 1]$ can be regarded, via its binary
 %expansion, as an infinite binary string, i.e., an element of $\Z / 2 Z \times
 %\Z / 2Z \times \cdots$. This differs from the set $V$ of the previous section
@@ -359,19 +358,21 @@ constant is exactly twice the Atkinson-Negro-Santoro constant given in Section
 %%%I'm writing my version of this introduction. You can take a look at both versions
 %%%and see what parts you'd like to keep of each. -Charlie
 
-Suppose we choose a binary string $(0.b_1 b_2 b_3 b_4 ...)_2$ uniformly at random; that is,
-each bit $b_i$ has an equal probability of being 0 or 1, independently of all the others. 
-What is the probability that the resulting sequence has finite stopping time? There is a great chance
-it will be stopped early, by picking $b_1=0, b_2=0,$ or $b_3 b_4 = 00.$ On the other hand, the longer the string
-$(0.b_1 b_2 b_3 ... b_k ...)_2$ becomes without being stopped, 
-the less likely $b_{k+1}$ is to make it stop.
-There are two salient differences between considering stopping times for binary (and later $b$-ary)
-sequences, and stopping times in $\oplus_{i=1}^\infty (\Z/2\Z).$ 
+Suppose we choose a binary string $(0.b_1 b_2 b_3 b_4 ...)_2$ uniformly at
+random; that is, each bit $b_i$ has an equal probability of being 0 or 1,
+independently of all the others.  What is the probability that the resulting
+sequence has finite stopping time? There is a great chance it will be stopped
+early, by picking $b_1=0, b_2=0,$ or $b_3 b_4 = 00.$ On the other hand, the
+longer the string becomes without being stopped, the less likely any particular
+bit being $0$ will make it stop. There are two salient differences between
+considering stopping times for binary (and later $b$-ary) sequences and
+stopping times in $\oplus_{i=1}^\infty (\Z/2\Z)$:
 \begin{enumerate}
-\item Binary sequences
-most likely never terminate. 
-\item A real number in $[0,1]$ can have more than one binary expansion,
-one of which is stopped (by an infinite tail of 0s), the other of which may or may not be (with an infinite tail of 1s).
+    \item Binary sequences most likely never terminate, i.e., there are likely
+        an infinite number of $1$s.
+    \item A real number in $[0,1]$ can have more than one binary expansion,
+        one of which is stopped (by an infinite tail of 0s), the other of which
+        may or may not be (with an infinite tail of 1s).
 \end{enumerate}
 Since the definition of ``stopped at time $k$'' depends only on the first $k$ bits in the expansion,
 (1) won't cause trouble, and in fact leads to our probabilistic questions.
@@ -647,7 +648,7 @@ questions.
 We can very quickly approximate the measures $\beta_b$ using their series
 representation, but we do not know much about them. Are they expressible in
 terms of well-known constants such as $e$, $\pi$, and $\gamma$? Are they
-irrational or transcendental?
+irrational? Transcendental?
 
 The prestopped integers introduced in Section~\ref{sec:integers} do not have
 natural density zero. Do they have \emph{any} natural density? If not, what are
