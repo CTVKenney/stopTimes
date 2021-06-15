@@ -350,8 +350,8 @@ lowerBoundProof:=proc(b)
     print(`These constants are approximately`, c = evalf(c0), C = evalf(C0)):
 
     print(`The base case`, n = 2 * N, `is easy to verify:`):
-    lhs := r(2, 2 * N) / b^(2 * N) - c - C / b^N:
-    rhs := rSeq(2, 2 * N) / b^(2 * N) - c0 - C0 / b^N:
+    lhs := r(b, 2 * N) / b^(2 * N) - c - C / b^N:
+    rhs := rSeq(b, 2 * N) / b^(2 * N) - c0 - C0 / b^N:
     print(lhs = evalf(rhs));
 
     print();
