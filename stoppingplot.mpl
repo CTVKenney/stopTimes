@@ -1,4 +1,88 @@
+print(`stoppingplot.mpl`):
+print(`A Maple package for exploring stopping times of binary strings,`);
+print(`by Robert Dougherty-Bliss and Charles Kenny,`);
+print(`which accompanies their article "Stopped Binary Strings."`);
+print(`For help, type "ezra();"`):
+
+ezra:=proc()
+if args=NULL then
+print(`stoppingplot.mpl`):
+print(`A Maple package for exploring stopping times of binary strings,`);
+print(`by Robert Dougherty-Bliss and Charles Kenny,`);
+print(`which accompanies their article "Stopped Binary Strings."`);
+print(`For help with a specific procedure, type "ezra(procedure_name);"`):
+
+print(`The main procedures are`);
+print(`stoppingTime, plotHeights, gSeq, rSeq`);
+print(`stoppedStrings, maximallyStoppedInts, preStoppedInts, stoppedInts, lowerBoundProof`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`stoppingTime` then
+print(`stoppingTime(L) computes the stopping time of the binary ({0, 1}) list L,`):
+print(`assuming that infinitely-many 0's are appended after the final element.`);
+print(`Try:`);
+print(`stoppingTime([0])`);
+print(`stoppingTime([1])`);
+print(`stoppingTime([10])`);
+print(`stoppingTime([1111111])`);
+print(`stoppingTime([11100110000000])`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`stoppedStrings` then
+print(`stoppedStrings(n, k) computes all binary strings of length n with stopping time k (which defaults to n)`);
+print(`Try:`);
+print(`stoppedStrings(5, 5)`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`maximallyStoppedInts` then
+print(`maximallyStoppedInts(n) computes the first n maximally stopped integers.`);
+print(`Try:`);
+print(`maximallyStoppedInts(10)`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`preStoppedInts` then
+print(`preStoppedInts(n) computes the first n prestopped integers.`);
+print(`Try:`);
+print(`preStoppedInts(10)`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`stoppedInts` then
+print(`stoppedInts(n) computes the first n stopped integers.`);
+print(`Try:`);
+print(`stoppedInts(10)`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`plotHeights` then
+print(`plotHeights(n) outputs a pointplot of 2^n evenly-spaced points in [0, 1),`);
+print(`where the height of a point is the stopping time of the string.`);
+print(`Try:`);
+print(`plotHeights(10)`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`gSeq` then
+print(`gSeq(b, n) computes the number of stopped base-b strings of length n.`);
+print(`Note that g(b, n) is zero for odd n > 1.`);
+print(`Try:`);
+print(`gSeq(2, 100)`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`rSeq` then
+print(`rSeq(b, n) computes the number of stopped base-b strings of length 2*n.`);
+print(`Shorthand for g(b, 2 * n).`);
+print(`Try:`);
+print(`rSeq(2, 50)`);
+fi:
+
+if nops([args])=1 and op(1,[args])=`lowerBoundProof` then
+print(`lowerBoundProof(b) generates a proof that r(b, n) / b^n converges to a positive constant,`);
+print(`where r(b, n) is the number of base-b strings of length 2n with stopping time 2n.`);
+print(`Try:`);
+print(`lowerBoundProof(10)`);
+fi:
+end:
+
 with(plots):
+
 #Inputs str, a string [0,1,0,0,1,1,1,0,1,1]
 #of 0s and 1s, and outputs the stopping time of this string, assuming infinitely-many 0s after the string elements.
 stoppingTime:=proc(str) local oCount, tim, dig, stopped:
@@ -84,6 +168,7 @@ end:
 # Compute the smallest T such that s[j] = 0 for all j in (T - T / k, T],
 # assuming that s is the prefix of an infinitely long string of 0's.
 KStoppingTime := proc(s, k)
+    local j, stopped, zeroCount, digit:
     j := 0:
     stopped := false:
     zeroCount := 0:
@@ -127,7 +212,7 @@ end:
 #Inputs n, outputs list [(x_1,y_1), (x_2,y_2), ...] of points to plot, where
 #the x's consist of 2^n evenly spaced binary points in [0,1), and
 #y's give the stopping time of the binary sequence associated to the x's. 
-plotheights:=proc(n) local i, L, str, allStrings:
+plotHeights:=proc(n) local i, L, str, allStrings:
     allStrings := binaryStrings(n):
     L:=[seq([add(str[i]*2^(-i),i=1..n),stoppingTime(str)],str in allStrings )]:
     pointplot(L,symbol=point):
@@ -192,24 +277,14 @@ computeTerms := proc(f, n)
     terms:
 end:
 
-# Select the positive integers k <= n such that f(k) is true.
-piTerms := proc(f, n) local k:
-    select(f, [seq(k, k=1..n)]):
-end:
-
 # Compute the first n maximally stopped integers.
-maximallyStopped := n -> computeTerms(isMaximallyStopped, n):
-
-piMaximallyStopped := n -> piTerms(isMaximallyStopped, n):
-
-# Compute the first n maximally stopped integers.
-piPreStopped := n -> piTerms(isPreStopped, n):
+maximallyStoppedInts := n -> computeTerms(isMaximallyStopped, n):
 
 # Compute the first n prestopped integers.
-preStopped := n -> computeTerms(isPreStopped, n):
+preStoppedInts := n -> computeTerms(isPreStopped, n):
 
 # Compute the first n stopped integers.
-preStopped := n -> computeTerms(isStopped, n):
+stoppedInts := n -> computeTerms(isStopped, n):
 
 a := proc(n) option remember:
     if n = 1 or n = 2 then
@@ -223,7 +298,7 @@ a := proc(n) option remember:
     return 2 * a(n - 1) - a((n - 1) / 2):
 end:
 
-g := proc(b, n) option remember:
+gSeq := proc(b, n) option remember:
     if n = 1 then
         return 1:
     fi:
@@ -237,19 +312,75 @@ g := proc(b, n) option remember:
     fi:
 
     if n mod 4 = 0 then
-        return b * g(b, n - 2):
+        return b * gSeq(b, n - 2):
     fi:
 
     if n mod 4 = 2 then
-        return b * g(b, n - 2) - (b - 1) * g(b, (n - 2) / 2):
+        return b * gSeq(b, n - 2) - (b - 1) * gSeq(b, (n - 2) / 2):
     fi:
 
     return 0:
 end:
 
-s := proc(b, n) local k:
-add(g(b, k) / b^k, k=1..n):
-end:
+rSeq := (b, n) -> gSeq(b, 2 * n):
 
-s := (b, n) -> add(g(b, k) / b^k, k=1..n):
-sf := (b, n) -> add(evalf(g(b, k) / b^k), k=1..n):
+lowerBoundProof:=proc(b)
+    local start, c0, C0, N, lhs, rhs:
+    start := time():
+    c0 := 0:
+    N := 0:
+
+    while evalf(c0) <= 0 do
+        N := N + 1:
+        C0 := rSeq(b, N) / b^N / (b - sqrt(b)):
+        c0 := (rSeq(b, 2 * N) / b^(2 * N) - C0 / b^N) * 9 / 10:
+    od:
+
+    print(`THEOREM. The sequence`, r(b, n) / b^n, `defined by the recurrence`):
+    print(r(b, 1) = (b - 1));
+    print(r(b, 2) = (b - 1)^2);
+    print(r(b, 2 * n) = b * r(b, 2 * n - 1));
+    print(r(b, 2 * n + 1) = b * r(b, 2 * n) - (b - 1) * r(b, n));
+    print(`converges to a positive constant`, c(b), `which is approximately equal to`, evalf(rSeq(b, 1000) / b^1000)):
+    print(`PROOF. The sequence`, r(b, n) / b^n, `is obviously monotonically decreasing, so it will suffice to provide a positive lower bound for it.`):
+    print(`We will instead prove the STRONGER claim, that`):
+    print(r(b, n) / b^n >= c + C / b^n):
+    print(`for all integers`, n >= 2 * N):
+    print(`Where`, c = c0, C = C0):
+    print(`These constants are approximately`, c = evalf(c0), C = evalf(C0)):
+
+    print(`The base case`, n = N, `is easy to verify:`):
+    lhs := r(2, 2 * N) / b^(2 * N) - c - C / b^N:
+    rhs := rSeq(2, 2 * N) / b^(2 * N) - c0 - C0 / b^N:
+    print(lhs = evalf(rhs));
+
+    print();
+
+    print(`Suppose that the result holds for`, 2 * n - 1, `greater than or equal to`, 2 * N);
+    print(`Then, by the defining recurrence, we have`);
+    print(r(b, 2 * n) / b^(2 * n) = r(b, 2 * n - 1) / b^(2 * n - 1));
+    print(`and the induction hypothesis immediately implies`);
+    print(r(b, 2 * n - 1) / b^(2 * n - 1) >= c + C / b^n);
+
+    print();
+
+    print(`Now suppose that the result holds for`, 2 * n >= N);
+    print(`Then, by the defining recurrence, we have`);
+    print(r(b, 2 * n + 1) / b^(2 * n + 1) = r(b, 2 * n) / b^(2 * n) - r(b, n) / b^(2 * n + 1));
+    print(`The induction hypothesis implies`);
+    print(r(b, 2 * n + 1) / b^(2 * n + 1) >= c + C / b^n - r(b, n) / b^(2 * n + 1));
+    print(`so we would be done if we could establish`);
+    print(C / b^n - r(b, n) / b^(2 * n + 1) >= C / b^(n + 1 / 2));
+    print(`or, equivalently,`);
+    print(r(b, n) / b^n <= (b - sqrt(b)) * C);
+    print(`But this is obvious, because`, r(b, n) / b^n, `is monotonically decreasing,`);
+    print(`and we have`, n >= N, `which implies`, r(b, n) / b^n <= r(b, N) / b^N);
+    print(`And it just so happens that`, r(b, N) / b^N = (b - sqrt(b)) * C);
+    print(`in fact, their quotient is`, rSeq(b, N) / b^N / (b - sqrt(b)) / C0);
+
+    print(`We have proven that EVEN implies ODD and ODD implies EVEN for all`, n >= 2 * N);
+    print(`and the EVEN base case of`, n = 2 * N, `was easy to establish.`);
+    print(`Therefore, by induction, the result holds for all`, n >= 2 * N);
+    print(`Q.E.D.`);
+    print(`The whole thing took`, time() - start, `seconds`);
+end:
