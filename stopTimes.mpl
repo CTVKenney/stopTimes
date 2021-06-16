@@ -328,15 +328,15 @@ lowerBoundProof:=proc(b)
     local start, c0, C0, N, lhs, rhs:
     start := time():
     c0 := 0:
-    N := 0:
+    N := 1:
 
-    while evalf(c0) <= 0 do
+    while evalf(c0) <= 10^(-5) do
         N := N + 1:
-        C0 := rSeq(b, N) / b^N / (b - sqrt(b)):
-        c0 := (rSeq(b, 2 * N) / b^(2 * N) - C0 / b^N) * 9 / 10:
+        C0 := (b - 1) * rSeq(b, N) / b^N / (b - sqrt(b)):
+        c0 := (rSeq(b, 2 * N) / b^(2 * N) - C0 / b^N):
     od:
 
-    print(`THEOREM. The sequence`, r(b, n) / b^n, `defined by the recurrence`):
+    print(`THEOREM. The sequence`, r(b, n) / b^n, `with numerator`, r(b, n), `defined by the recurrence`):
     print(r(b, 1) = (b - 1));
     print(r(b, 2) = (b - 1)^2);
     print(r(b, 2 * n) = b * r(b, 2 * n - 1));
@@ -349,6 +349,13 @@ lowerBoundProof:=proc(b)
     print(`Where`, c = c0, C = C0):
     print(`These constants are approximately`, c = evalf(c0), C = evalf(C0)):
 
+    print(`To check, note that`, r(b, 1000) / b^1000 = evalf(rSeq(b, 1000) / b^1000));
+    print(`While`, c = evalf(c0));
+    if evalf(rSeq(b, 1000) / b^1000) < evalf(c0) then
+        print(`Something is wrong!`);
+        return:
+    fi:
+
     print(`The base case`, n = 2 * N, `is easy to verify:`):
     lhs := r(b, 2 * N) / b^(2 * N) - c - C / b^N:
     rhs := rSeq(b, 2 * N) / b^(2 * N) - c0 - C0 / b^N:
@@ -356,25 +363,25 @@ lowerBoundProof:=proc(b)
 
     print();
 
-    print(`Suppose that the result holds for`, 2 * n - 1, `greater than or equal to`, 2 * N);
+    print(`Suppose that the result holds for`, n = 2 * k - 1, `greater than or equal to`, 2 * N);
     print(`Then, by the defining recurrence, we have`);
-    print(r(b, 2 * n) / b^(2 * n) = r(b, 2 * n - 1) / b^(2 * n - 1));
+    print(r(b, 2 * k) / b^(2 * k) = r(b, 2 * k - 1) / b^(2 * k - 1));
     print(`and the induction hypothesis immediately implies`);
-    print(r(b, 2 * n - 1) / b^(2 * n - 1) >= c + C / b^n);
+    print(r(b, 2 * k - 1) / b^(2 * k - 1) >= c + C / b^k);
 
     print();
 
-    print(`Now suppose that the result holds for`, 2 * n >= N);
+    print(`Now suppose that the result holds for`, n = 2 * k, `greater than or equal to`, 2 * N);
     print(`Then, by the defining recurrence, we have`);
-    print(r(b, 2 * n + 1) / b^(2 * n + 1) = r(b, 2 * n) / b^(2 * n) - r(b, n) / b^(2 * n + 1));
+    print(r(b, 2 * k + 1) / b^(2 * k + 1) = r(b, 2 * k) / b^(2 * k) - r(b, k) / b^(2 * k + 1));
     print(`The induction hypothesis implies`);
-    print(r(b, 2 * n + 1) / b^(2 * n + 1) >= c + C / b^n - r(b, n) / b^(2 * n + 1));
+    print(r(b, 2 * k + 1) / b^(2 * k + 1) >= c + C / b^k - r(b, k) / b^(2 * k + 1));
     print(`so we would be done if we could establish`);
-    print(C / b^n - r(b, n) / b^(2 * n + 1) >= C / b^(n + 1 / 2));
+    print(C / b^k - r(b, k) / b^(2 * k + 1) >= C / b^(k + 1 / 2));
     print(`or, equivalently,`);
-    print(r(b, n) / b^n <= (b - sqrt(b)) * C);
+    print(r(b, k) / b^k <= (b - sqrt(b)) * C);
     print(`But this is obvious, because`, r(b, n) / b^n, `is monotonically decreasing,`);
-    print(`and we have`, n >= N, `which implies`, r(b, n) / b^n <= r(b, N) / b^N);
+    print(`and we have`, k >= N, `which implies`, r(b, k) / b^k <= r(b, N) / b^N);
     print(`And it just so happens that`, r(b, N) / b^N = (b - sqrt(b)) * C);
     print(`in fact, their quotient is`, rSeq(b, N) / b^N / (b - sqrt(b)) / C0);
 
