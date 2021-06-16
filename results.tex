@@ -1,22 +1,34 @@
-\documentclass[12pt]{amsart}
+\documentclass[12pt]{article}
+\usepackage[]{amsmath}
 \usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage[]{geometry}
 \newcommand*\oct{\vcenter{\hbox{\includegraphics[width=.9em]{octagon.png}}}}
+\usepackage[]{hyperref}
+
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\Z}{\mathbb{Z}}
-\usepackage[]{hyperref}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
 \newtheorem{corollary}{Corollary}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
 \title{Stopped Binary Strings}
-\author{Robert Dougherty-Bliss and Charles Kenney}
+\date{}
+
+\author{Robert Dougherty-Bliss \\
+    \href{mailto:robert.w.bliss@gmail.com}{robert.w.bliss@gmail.com} \\
+    Charles Kenney \\
+    \href{mailto:ctk47@math.rutgers.edu}{ctk47@math.rutgers.edu} \\
+    Department of Mathematics, Rutgers University (New Brunswick) \\
+    110 Frelinghuysen Rd. \\
+    Piscataway, NJ 08854-8019, USA
+}
 
 \begin{document}
 \maketitle
@@ -26,30 +38,31 @@
     indices in $(k / 2, k]$ are zero. The \emph{stopping time} of a binary
     string is the smallest such $k$, if any exist. We show that the number of
     binary strings of length $2n$ with stopping time $2n$ is the $n$th
-    Narayana--Zidek--Cappel number. By considering binary expansions, we
+    Narayana--Zidek--Cappel number $T_n$. By considering binary expansions, we
     produce two new integer sequences (the ``stopped'' integers) and a
-    measurable subset of the unit interval with unknown measure. Generalizing
-    these results to arbitrary bases produces infinite families of integer
-    sequences not in the OEIS and infinitely many new constants denoting the
-    measures of certain subsets of the unit interval.
+    measurable subset of the unit interval with unknown measure. Stating these
+    results in arbitrary bases produces infinite families of integer sequences
+    not in the OEIS, infinitely many new constants denoting the measures of
+    certain subsets of the unit interval, and a generalization of the result
+    that $T_n \sim c \cdot 2^n$.
 \end{abstract}
 
-\noindent A new, experimental machine is placed into a factory. Despite its
-inventor's extolments, management is skeptical. They subject the machine to a
-rigorous \emph{testing} process: Once a week, an inspector will visit the
-machine and mark down a $1$ if a problem is detected, and a $0$ otherwise. The
-first time the machine \emph{consecutively} passes half of the total number of
-inspections, inspections will cease. This process creates a \emph{binary
-string}, and the question is whether it ends in sufficiently many $0$'s to
-denote a successful testing regimen. We call such successful binary string
-\emph{stopped}.
+\noindent A new, experimental machine is placed into a factory. The workers are
+reluctant to trust this new contraption, which is surely intended to replace
+them. They subject the machine to a rigorous \emph{testing} process: Once a
+week, a worker will visit the machine and mark down a $1$ if any problem is
+detected, and a $0$ otherwise. The first time the machine \emph{consecutively}
+passes half of the total number of inspections, inspections will cease. This
+process creates a \emph{binary string}, and the question is whether it ends in
+sufficiently many $0$'s to denote a successful testing regimen. We call such
+successful binary string \emph{stopped}.
 
 Given a fixed number of inspections, how many binary strings are stopped? If we
 inspect \emph{forever}, how many inspections will eventually result in a
 stopped string? This paper explores some of these questions. Along the way we
 will produce an infinite family of sequences which do not appear in the OEIS
 and an infinite family of measurable sets on the real line whose measures are
-unknown.
+unknown. First, let us give an explicit definition of stopped binary strings.
 
 \begin{definition}
     A binary string $(x_1, x_2, \dots x_n)$ is \emph{stopped at index $k \leq
@@ -60,18 +73,24 @@ unknown.
     time $n$ ``stopped'' without reference to an index.
 \end{definition}
 
+\begin{definition}
+    Let $g(n)$ be the number of binary strings of length $n$ with stopping time
+    $n$. 
+\end{definition}
+
 The motivating result for this paper is that the number of binary sequences of
-length $2n$ with stopping time $2n$ equals the $n$th Narayana--Zidek--Cappel
-number $T_n$, defined by the recurrence
-\begin{align*}
-    T_1 &= 1 & \\
-    T_2 &= 1 & \\
-    T_{2n} &= 2 T_{2n - 1} &(n \geq 2)\\
-    T_{2n + 1} &= 2 T_{2n} - T_n  &(n \geq 1).
-\end{align*}
-This sequence is A2083 in the OEIS \cite{oeis}. It originates from
-\cite{capell1970knock}, where the authors show that $T_n$ enumerates the number
-of random knock-out tournaments with $n$ players.
+length $2n$ with stopping time $2n$---that is, $g(2n)$---equals the $n$th
+Narayana--Zidek--Cappel number $T_n$, defined by the recurrence
+\begin{align}
+    T_1 &= 1 \notag \\
+    T_2 &= 1 \notag \\
+    T_{2n} &= 2 T_{2n - 1} \tag{$n \geq 2$} \\
+    T_{2n + 1} &= 2 T_{2n} - T_n. \tag{$n \geq 1$}
+\end{align}
+The sequence $T_n$ is A2083 in the OEIS \cite{oeis}, and was originally
+introduced by Capell and Narayana \cite{capell1970knock,
+narayana1969tournaments, narayana1979tournaments} as a means to enumerate
+random knock-out tournaments.
 
 Alongside this result, our definition of a stopped string generalizes to
 various integer sequences and sets of reals by passing to the relevant binary
@@ -79,6 +98,10 @@ expansions. The definition also generalizes to bases other than $2$, the only
 change being that any occurrence of ``$1$'' should be replaced with ``any
 nonzero digit.'' This leads to an infinite family of sets, integer sequences,
 and so on.
+
+The authors have created a Maple package for studying stopped strings called
+\texttt{stopTimes}. It is available as a git repository here:
+\url{https://github.com/CTVKenney/stopTimes}.
 
 The rest of this paper is organized as follows. Section~\ref{sec:recs}
 establishes the identity between the number of stopped binary strings and the
@@ -92,8 +115,7 @@ natural densities.
 \section{Counting stopped binary strings}
 \label{sec:recs}
 
-Let $g(n)$ be the number of binary strings of length $n$ with stopping time
-$n$. Since stopping times are even except for $1$, we know that $g(n)$ is zero
+Since stopping times are even except for $1$, we know that $g(n)$ is zero
 for all odd $n$ except $n = 1$, where $g(1) = 1$. Thus the interesting sequence
 is $g(2n)$, which we will show (in two ways!) equals the
 Narayana--Zidek--Capell sequence $T_n$.
@@ -113,7 +135,8 @@ stopping time when considered as a sufficiently long, finite binary string.
     $1$, and only finitely many are $1$. For each positive integer $k$, let
     $\oct_k$ be the set of elements of $V$ which are zero beyond position $k$
     and, when the first $k$ entries are regarded as a finite binary string,
-    they have stopping time $k$. \footnote{As a result, all entries after $k/2$ are 0} That is, $\oct_1 = \{0\} \subset V$,
+    they have stopping time $k$. (As a result, all entries after $k/2$ are 0.)
+    That is, $\oct_1 = \{0\} \subset V$,
     \begin{equation*}
         \oct_{2k} = \{v \in V : \forall j > k, v_j = 0, \text{ and } v \text{ has stopping time } 2k \}
     \end{equation*}
@@ -214,12 +237,11 @@ First, we will prove this directly from our definitions.
 Now we will prove our theorem combinatorially by relating our sequence to a
 certain class of compositions. Recall that a \emph{composition} of an integer
 $n$ is a vector in $(\Z_{>0})^m$, for some $m \in \{1,2,...,n\}$, whose
-components add to $n$. The $n$th Narayana-Zidek-Capell number, $T_n$, is the
-cardinality of the set
+components add to $n$. According to the OEIS, the $n$th Narayana-Zidek-Capell
+number $T_n$ is the cardinality of the set
 \begin{align*}
     R_n = \left\{ \text{Compositions } p \text{ of } n \text{ satisfying } p_1 = 1 \text{ and } p_k \leq \sum_{j=1}^{k-1} p_j \right\}.
 \end{align*}
-%OEIS reference for this, or better yet the original source
 
 \begin{proposition}
     The number of stopped binary strings of length $2n$ are in bijection with
@@ -254,25 +276,34 @@ cardinality of the set
 
 A slightly different recurrence holds for arbitrary bases. Let $g_b(n)$ be the
 number of $b$-ary strings of length $n$ with stopping time $n$. Again, stopping
-time $n$  means that all entries with indices in $(n/2, n]$ are 0, but for
+time $n$ means that all entries with indices in $(n/2, n]$ are 0, but for
 $1\leq m<n,$ some entry in $(m/2, m]$ is nonzero. In the experimental machine
 example, this corresponds to the case where there are $b-1$ distinct errors the
 machine could throw. Then
-\begin{align*}
-    g_b(1) &= 1  &\\
-    g_b(2) &= b - 1  &\\
-    g_b(4) &= (b - 1)^2  &\\
-    g_b(4n) &= b g_b(4n - 2)  &(n \geq 2)\\
-    g_b(4n + 2) &= b g_b(4n) - (b - 1) g_b(2n) &(n \geq 1).
-\end{align*}
-/Users/charleskenney/Desktop/Screen\ Shot\ 2021-02-09\ at\ 3.24.06\ PM.png 
-For convenience, let $r_b(n) = g_b(2n)$, so that the recurrences read
-\begin{align*}
-    r_b(1) &= b - 1 \\
-    r_b(2) &= (b - 1)^2 \\
-    r_b(2n) &= b r_b(2n - 1) \\
-    r_b(2n + 1) &= b r_b(2n) - (b - 1) r_b(n).
-\end{align*}
+\begin{align}
+    g_b(1) &= 1 \notag \\
+    g_b(2) &= b - 1 \notag \\
+    g_b(4) &= (b - 1)^2 \notag \\
+    g_b(4n) &= b g_b(4n - 2) \tag{$n \geq 2$}\\
+    g_b(4n + 2) &= b g_b(4n) - (b - 1) g_b(2n) \tag{$n \geq 1$}.
+\end{align}
+The proof for arbitrary $b$ is nearly identical to $b = 2$.
+
+It is cumbersome to always write $g_b(2n)$, so let us introduce an auxillary
+sequence for convenience.
+
+\begin{definition}
+    Let $r_b(n) = g_b(2n)$ be the number of $b$-ary strings of length $2n$ with
+    stopping time $2n$, for $n \geq 1$.
+\end{definition}
+
+The recurrences now read
+\begin{align}
+    r_b(1) &= b - 1 \notag \\
+    r_b(2) &= (b - 1)^2 \notag \\
+    r_b(2n) &= b r_b(2n - 1) \tag{$n \geq 2$} \\
+    r_b(2n + 1) &= b r_b(2n) - (b - 1) r_b(n) \tag{$n \geq 1$}.
+\end{align}
 
 The sequences $r_b(n)$ seem new for $b \geq 3$ in the sense that they do not
 appear in the OEIS. All $r_b(n)$ satisfy the following ``meta-Fibonacci''-like
@@ -299,7 +330,8 @@ property.
     A similar argument applies for $2n + 1 \geq 3$.
 \end{proof}
 
-The recurrence that $r_b(n)$ satisfies implies the following asymptotic information.
+The recurrence of $r_b(n)$ implies that $r_b(n) = O(b^n)$, made sharper in the
+following proposition.
 
 \begin{proposition}
     \label{monotone}
@@ -330,67 +362,23 @@ The recurrence that $r_b(n)$ satisfies implies the following asymptotic informat
 \end{proof}
 
 This proposition implies that $r_b(n) / b^n$ converges to some nonnegative
-constant. In fact, it is a \emph{positive} constant.
+constant. In the Narayana--Zidek--Capell case $b = 2$, the constant is
+\emph{positive}. This was established by Narayana and Capell themselves
+\cite{capell1970knock} and reproven by Emerson \cite{emerson2006family} using
+the meta-Fibonacci property. In fact the constant is positive for all $b \geq
+2$ as the following theorem indicates, so $r_b(n)$ grows at exactly the same
+rate as $b^n$. 
 
 \begin{theorem}
     There exist positive constants $c_b$ such that
     \begin{equation*}
-        \lim_n \frac{r_b(n)}{b^n} = \lim_n \frac{g_b(2n)}{b^n} = c_b
+        \lim_n \frac{r_b(n)}{b^n} = \lim_n \frac{g_b(2n)}{b^n} = c_b.
     \end{equation*}
-    For $b \geq 2$,
+    Further, for $b \geq 3$,
     \begin{equation*}
-        c_b \geq \frac{(b - 1) (b^{3 / 2} - b - 1)}{b^{3 / 2} (b - \sqrt{b})}.
+        c_b \geq \left(1 - \frac{1}{b}\right)^4.
     \end{equation*}
 \end{theorem}
-
-[TODO: This proof is not done! The theorem is surely true, but I haven't worked
-out a good base case yet.]
-
-\begin{proof}
-    Given our previous proposition, it suffices to provide a positive lower
-    bound for $r_b(n) / b^n$. We will prove something slightly stronger: There
-    exist constants $c$ and $C$ such that
-    \begin{equation*}
-        \frac{r_b(n)}{b^n} \geq c + \frac{C}{b^{n / 2}}.
-    \end{equation*}
-    We will proceed by induction. First, fix an integer $N \geq 2$. We will
-    start our induction at $2N - 1$.
-
-    Suppose that the claim is true for $2n - 1$ for some $n \geq N$. Then
-    \begin{equation*}
-        \frac{r_b(2n)}{b^{2n}} = \frac{r_b(2n - 1)}{b^{2n - 1}}
-                               \geq c + \frac{C}{b^{n - 1 / 2}}
-                               \geq c + \frac{C}{b^n}.
-    \end{equation*}
-    Now suppose that the claim is true for $2n$ for some $n \geq N$. Then,
-    \begin{align*}
-        \frac{r_b(2n + 1)}{b^{2n + 1}} &= \frac{r_b(2n)}{b^{2n}} - \frac{r_b(n)}{b^{2n + 1}} \\
-                                       &\geq c + \frac{C}{b^n} - \frac{r_b(n)}{b^{2n + 1}}.
-    \end{align*}
-    It would suffice to check that
-    \begin{equation*}
-        \frac{C}{b^n} - \frac{r_b(n)}{b^{2n + 1}} \geq \frac{C}{b^{n + 1/2}},
-    \end{equation*}
-    or
-    \begin{equation*}
-        \frac{r_b(n)}{b^n} \leq (b - \sqrt{b}) C.
-    \end{equation*}
-    This holds for $n \geq N$ if we take
-    \begin{equation*}
-        C = \frac{r_b(N)}{b^N (b - \sqrt{b})}
-    \end{equation*}
-    since $r_b(n) / b^n$ is monotonically decreasing.
-
-    For the base case, let
-    \begin{equation*}
-        c = \frac{r_b(N)}{b^N} - \frac{C}{b^{N / 2}}.
-    \end{equation*}
-    is positive if $b \geq 3$, and
-    \begin{equation*}
-        \frac{r_b(1)}{b^1} = c + \frac{C}{b^{1/2}}.
-    \end{equation*}
-    Our induction shows that our claim holds for $n \geq 1$.
-\end{proof}
 
 Here are approximations of these constants:
 \begin{align*}
@@ -400,12 +388,67 @@ Here are approximations of these constants:
     c_5 &\approx 0.4874305959 \\
     c_6 &\approx 0.5599514923.
 \end{align*}
-As we have said, the case $b = 2$ generates the Narayana--Zidek--Capell numbers
-$T_n$, and it is well-known that $T_n / 2^n$ converges to a positive constant.
-See, for example, Capell and Narayana's original paper \cite{capell1970knock},
-or Emerson's argument in \cite{emerson2006family}. (According to the OEIS, the
-constant is exactly twice the Atkinson-Negro-Santoro constant given in Section
-2.28 of Finch's book of mathematical constants \cite{finch2003mathematical}.)
+
+\begin{proof}
+    We will prove the slightly stronger claim that
+    \begin{equation*}
+        \frac{r_b(n)}{b^n} \geq c + \frac{C}{b^{n / 2}}
+    \end{equation*}
+    for $n \geq 4$, where
+    \begin{equation*}
+        C = \frac{b - 1}{b - \sqrt{b}} \frac{r_b(2)}{b^2}
+        ; \quad
+        c = \frac{r_b(4)}{b^4} - \frac{C}{b^2}.
+    \end{equation*}
+    The quantity $c$ is positive for $b \geq 2$, which amounts to the base case
+    $n = 4$.
+
+    For the inductive step, suppose that the claim holds for $n = 2k - 1 \geq
+    4$. Then the recurrence for $r_b$ implies
+    \begin{equation*}
+        \frac{r_b(2k)}{b^{2k}} = \frac{r_b(2k - 1)}{b^{2k - 1}}
+                               \geq c + \frac{C}{b^{k - 1 / 2}}
+                               \geq c + \frac{C}{b^k},
+    \end{equation*}
+    which establishes the claim for $n = 2k$. If the claim holds for $n = 2k
+    \geq 4$, then the recurrence for $r_b$ implies
+    \begin{align*}
+        \frac{r_b(2k + 1)}{b^{2k + 1}} &= \frac{r_b(2k)}{b^{2k}} - (b - 1) \frac{r_b(k)}{b^{2k + 1}} \\
+                                       &\geq c + \frac{C}{b^k} - (b - 1)\frac{r_b(k)}{b^{2k + 1}}.
+    \end{align*}
+    To turn this lower bound into the desired one, it would suffice to check
+    that
+    \begin{equation*}
+        \frac{C}{b^k} - (b - 1)\frac{r_b(k)}{b^{2k + 1}} \geq \frac{C}{b^{k + 1/2}},
+    \end{equation*}
+    or
+    \begin{equation*}
+        \frac{r_b(k)}{b^k} \leq \frac{b - \sqrt{b}}{b - 1} C.
+    \end{equation*}
+    Since $r_b(k) / b^k$ is monotonically decreasing and $k \geq 2$, we
+    \emph{do} have
+    \begin{equation*}
+        \frac{r_b(k)}{b^k} \leq \frac{r_b(2)}{b^2} = \frac{b - \sqrt{b}}{b - 1} C,
+    \end{equation*}
+    which establishes the claim for $2k + 1$. Induction does the rest.
+
+    To get the inequality, note that
+    \begin{equation*}
+        c = \left( 1 - \frac{1}{b} \right)^3 \left(1 - \frac{1}{b(b - \sqrt{b})}\right)
+        \geq
+        \left( 1 - \frac{1}{b} \right)^4
+    \end{equation*}
+    for $b \geq 3$.
+\end{proof}
+
+The uniform base case of $n = 4$ was found via experimentation with
+the procedure \texttt{lowerBoundProof(b)} is our Maple package
+\texttt{stopTimes}.
+
+It would be nice to understand these constants better. For example, according
+to the OEIS, $c_2$ is a multiple of the Atkinson--Negro--Santoro constant given
+in Section 2.28 of Finch's book of mathematical constants
+\cite{finch2003mathematical}. We have no other promising leads.
 
 \section{Stopped reals in the unit interval}
 \label{sec:reals}
@@ -455,7 +498,7 @@ compute the following sets:
 \end{align*}
 
 \begin{figure}
-\includegraphics[width=0.7\textwidth]{fig1.png}
+\includegraphics[width=\textwidth]{fig1.png}
 \caption{Plot of binary sequence stopping times. Stopping times take values in $[0,\infty].$}
 \end{figure}
 
@@ -541,9 +584,7 @@ These constants go as follows:
 These seem to be decreasing, and indeed they are, down to 0.
 (As the number of possible errors for the experimental machine increases, the probability
 that it will run $n/2$ consecutive errorless weeks tends to 0.)
-% TODO
-% Conjecture: \beta_b = 2 / b + O(1/b^n) for all n.
-% It would probably be better to re-write this section with more of a probabilistic flavor.
+
 \begin{theorem}
     For $b \geq 2$,
     \begin{equation*}
@@ -635,11 +676,16 @@ Neither sequence appears in the OEIS.
         M(x) \leq \sum_{k \leq m + 1} g_2(k).
     \end{equation*}
     Since $g_2(2k) = \Theta(2^k)$, the upper bound and lower bounds are both
-    $\Theta(2^{m / 2}) = \Theta(\sqrt{x})$. For example,
-    \begin{equation*}
-        \sum_{k \leq m + 1} g_2(k) = \Theta(1) + \Theta(\sum_{k \leq (m + 1) / 2} 2^k) = \Theta(2^{m / 2}) = \Theta(\sqrt{x}).
-    \end{equation*}
-    It follows that $M(x) = \Theta(\sqrt{x})$ and $P(x) = M(x^2) = \Theta(x)$.
+    $\Theta(2^{m / 2}) = \Theta(\sqrt{x})$. For example, there exists a
+    positive constant $c$ such that $g_2(2k) \leq c 2^k$, so
+    \begin{align*}
+        \sum_{k \leq m + 1} g_2(k) &= \sum_{2k \leq m + 1} g_2(2k) \\
+                                   &\leq \sum_{k \leq (m + 1) / 2} c 2^k \\
+                                   &= O(2^{m / 2}) \\
+                                   &= O(\sqrt{x}).
+    \end{align*}
+    The lower bound is treated similarly. It follows that $M(x) =
+    \Theta(\sqrt{x})$, and therefore $P(x) = M(x^2) = \Theta(x)$.
 \end{proof}
 
 An easy corollary of this result is that the maximally stopped integers grow
@@ -653,40 +699,60 @@ for some constant $c$. Then $m \geq n^2 / c^2$. The upper bound is the same
 except for the constant.
 
 \begin{corollary}
-    The maximally stopped integers have natural density $0$, i.e., $\lim_{x \to
-    \infty} M(x) / x = 0$. The prestopped integers do not have natural density
-    $0$.
+    The maximally stopped integers have natural density $0$, i.e.,
+    \begin{equation*}
+        \lim_{x \to \infty} \frac{M(x)}{x} = 0.
+    \end{equation*}
 \end{corollary}
 
 \begin{proof}
-    Since $M(x) = \Theta(\sqrt{x})$, we have $M(x) / x = \Theta(x^{-1/2})$, so
-    $M(x) / x \to 0$ as $x \to \infty$. On the other hand, $P(x) = \Theta(x)$
-    implies that
-    \begin{equation*}
-        cx \leq P(x) \leq Cx
-    \end{equation*}
-    for some positive constants $c$ and $C$. Thus $P(x) / x$ does \emph{not} go
-    to $0$ as $x \to \infty$.
+    Since $M(x) = \Theta(\sqrt{x})$, we have $M(x) / x = \Theta(x^{-1/2})$.
 \end{proof}
 
-\section{Conclusions and open questions}%
+\section{Conclusions and open questions}
 \label{sec:conclusion}
 
-We have produced an infinite family of integer sequences, $g_b(n)$, an infinite
-family of real constants, $\beta_b$, and two new integer sequences, the
-maximally stopped and prestopped integers. These objects have left some open
-questions.
+We have produced infinite families of integer sequences, $r_b(n)$ and $g_b(n)$,
+two infinite families of real constants, $c_b$ and $\beta_b$, and two new
+integer sequences, the maximally stopped and prestopped integers.
 
-We can very quickly approximate the measures $\beta_b$ using their series
-representation, but we do not know much about them. Are they expressible in
+It would be interesting to know more about the constants $c_b$ and $\beta_b$.
+We can approximate them with the underlying recurrences and series
+representations, but that is about all we can say. Are they expressible in
 terms of well-known constants such as $e$, $\pi$, and $\gamma$? Are they
-irrational? Transcendental?
+irrational? Transcendental? Has anyone ever seen them before? It seems unlikely
+that they are well-known, or that we could say anything non-trivial about them
+without significant amounts of sweat.
 
-The prestopped integers introduced in Section~\ref{sec:integers} do not have
-natural density zero. Do they have \emph{any} natural density? If not, what are
-their upper and lower natural densities?
+\begin{thebibliography}{1}
 
-\bibliographystyle{unsrt}
-\bibliography{cite}
+\bibitem{capell1970knock}
+P.~Capell and T.~V.~Narayana, On knock-out tournaments. \emph{Canadian
+Mathematical Bulletin} \textbf{13} (1970), 105--109.
+
+\bibitem{emerson2006family}
+N.~Emerson, A family of meta-Fibonacci sequences defined by variable order
+recursions, arXiv preprint math/0508522 (2005).
+
+\bibitem{finch2003mathematical}
+S.~Finch, \emph{Mathematical Constants}, Cambridge university press, 2003.
+
+\bibitem{narayana1969tournaments}
+T.~V.~Narayana and J.~Zidek, Contributions to the Theory of Tournaments Part I
+The Combinatorics of Knock-Out Tournaments. \emph{Cahiers du Bureau
+universitaire de recherche op\'erationnelle S\'erie Recherche} \textbf{13}
+(1969) 3--18.
+
+\bibitem{narayana1979tournaments}
+T.~V.~Narayana and F.~Agyepong, Contributions to the Theory of Tournaments Part
+IV A Comparaison of Tournaments Through Probabilistic Completions.
+\emph{Cahiers du Bureau universitaire de recherche op\'erationnelle S\'erie
+Recherche} \textbf{32} (1979), 21--34.
+
+\bibitem{oeis}
+OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences,
+\url{http://oeis.org} (2021).
+
+\end{thebibliography}
 
 \end{document}
