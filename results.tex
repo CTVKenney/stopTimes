@@ -235,18 +235,26 @@ First, we will prove this directly from our definitions.
     This establishes the recurrence.
 \end{proof}
 
-Now we will prove our theorem combinatorially by relating our sequence to a
-certain class of compositions. Recall that a \emph{composition} of an integer
+Now we will prove our theorem combinatorially by relating $\oct_{2n}$ to a
+class of compositions known to be enumerated by $T_n$. Recall that a \emph{composition} of an integer
 $n$ is a vector in $(\Z_{>0})^m$, for some $m \in \{1,2,...,n\}$, whose
-components add to $n$. According to the OEIS, the $n$th Narayana-Zidek-Capell
-number $T_n$ is the cardinality of the set
-\begin{align*}
-    R_n = \left\{ \text{Compositions } p \text{ of } n \text{ satisfying } p_1 = 1 \text{ and } p_k \leq \sum_{j=1}^{k-1} p_j \right\}.
-\end{align*}
+components add to $n$.
+
+\begin{definition}
+    A \emph{Lenormand composition} of $n$ is a vector $(p_1, ..., p_m)$ of positive integers satisfying
+    \begin{align*}
+        &p_1 + ... + p_m = n &\text{Composition of } n \\
+        &p_1 = 1 & \\
+        &p_k \leq \sum_{j=1}^{k-1} p_{j} &\text{Lenormand conditions.}
+    \end{align*}
+    Let
+    $$\mathcal{L}_n = \big\{\text{Lenormand compositions of } n \big\}.$$
+\end{definition}
+
+
 
 \begin{proposition}
-    The number of stopped binary strings of length $2n$ are in bijection with
-    the compositions in $R_n$.
+    The set of binary strings with stopping time $2n,$ i.e. $\oct_{2n}$, is in bijection with $\mathcal{L}_n$.
 \end{proposition}
 
 \begin{proof}
@@ -256,8 +264,8 @@ number $T_n$ is the cardinality of the set
         F(p) = (f(p_1), f(p_2), ..., f(p_m), 0,0,...),
     \end{align*}
     concatenated in the natural way, with a tail of zeroes appended at the end.
-    Then $F: R_n \overset{\sim}{\to} \oct_{2n}$ is a bijection, so $|\oct_{2n}| = g(2n) = T_n.$
-    Indeed, if $p \in R_n$, then since $\sum_{j=1}^{m} p_j = n,$ the final nonzero entry in $F(p)$ is in spot $n$. Thus
+    Then $F: \mathcal{L}_n \overset{\sim}{\to} \oct_{2n}$ is a bijection, so $|\oct_{2n}| = g(2n) = T_n.$
+    Indeed, if $p \in \mathcal{L}_n$, then since $\sum_{j=1}^{m} p_j = n,$ the final nonzero entry in $F(p)$ is in spot $n$. Thus
     $F(p)$ is stopped at time $2n$, and is not stopped at time $t$ for any $t \in [n,2n-1].$
     And if the zeroes from $f(p_r)$ in $F(p)$ caused $F(p)$ to be stopped at some time $t \leq n-1,$
     \begin{align*}
@@ -265,7 +273,7 @@ number $T_n$ is the cardinality of the set
 	&\uparrow \\
 	&\text{index } t
     \end{align*}
-    then $p_r  > \lceil t/2 \rceil \geq \sum_{j=1}^{r-1} p_j.$ But this would contradict the fact that $p \in R_n.$
+    then $p_r  > \lceil t/2 \rceil \geq \sum_{j=1}^{r-1} p_j.$ But this would contradict the fact that $p \in \mathcal{L}_n.$
     And, if $b \in \oct_{2n}$ has 1s at indices $a_1 = 1, a_2, ..., a_\ell = n,$ then
     \begin{align*}
 	&F^{-1}: \oct_{2n} \to R_n \\
