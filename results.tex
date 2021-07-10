@@ -1,14 +1,18 @@
 \documentclass[12pt]{article}
 \usepackage[]{amsmath}
 \usepackage[]{amsfonts}
-\usepackage{amsthm}
+\usepackage{amsthm, mathtools}
 \usepackage{graphicx}
 \usepackage[]{geometry}
 \newcommand*\oct{\vcenter{\hbox{\includegraphics[width=.9em]{octagon.png}}}}
 \usepackage[]{hyperref}
 
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -732,6 +736,47 @@ terms of well-known constants such as $e$, $\pi$, and $\gamma$? Are they
 irrational? Transcendental? Has anyone ever seen them before? It seems unlikely
 that they are well-known, or that we could say anything non-trivial about them
 without significant amounts of sweat.
+
+Let $f : \Z_{>0} \to \R_{\geq 0}.$ 
+Let $b = (b_1, b_2, ...)$ be a binary sequence. We say $b$ is $f$-stopped at time
+$T$ if, for every index
+$$i \in (f(T), T] \cap \Z,$$
+$b_i = 0.$ The $f$-stopping time of $b$ is the least positive integer $T$ such that
+$b$ is stopped at time $T.$ The stopped sequences explored in this paper are $f$-stopped for
+$f(n) = n/2.$
+
+\begin{conjecture}
+    Let $f(n) = 2n/3.$
+    For $n \in \Z_{>0},$ let $g(n) = \# \{\text{Binary sequences of length} n \text{ with } f\text{-stopping time } n\}.$
+    Let $a_0, a_1, ...$ be the sequence \emph{A030032} in the OEIS given by $a(0) = 1,$
+    $$a(n+1) = \sum_{k=0}^{\floor{n/3}} a(k) a(n-k).$$
+    Then $g(1) = 1$ and for $n \geq 1,$
+    \begin{align*}
+        g(3n-1) &= a(2n-2) \\
+        g(3n) &= a(2n-1) \\
+        g(3n+1) &= 0.
+    \end{align*}
+    That is, the nonzero values of $g(n)$ (after $g(1)$) are enumerated by \emph{A030032}.
+\end{conjecture}
+
+Enumerating the binary $f$-stopped sequences of length $n$ for functions such as $f(n) = n - \frac{n}{k}$, yields an interesting open problem.
+As $k$ grows, the enumerating sequences appear to exhibit increasing similarity to the Fibonnaci numbers.
+
+\begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c | c | c |}
+\hline
+ & $n=1$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 \\
+\hline
+$f(n) = n/2$ & 1 & 1 & 0 & 1 & 0 & 1 & 0 & 2 & 0 & 3 & 0 & 6 & 0 & 11\\
+\hline
+$2n/3$ & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 2 & 3 & 0 & 5 & 10 & 0 & 18 \\
+\hline
+$3n/4$ & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 2 & 0 & 3 & 5 & 8 & 0 & 16 \\
+\hline
+$4n/5$ & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 2 & 3 & 0 & 5 & 8 & 13\\
+\hline
+\end{tabular}
+ 
+Naturally, one can extend the notion of $f$-stopped sequences to bases other than two. 
 
 \begin{thebibliography}{1}
 
