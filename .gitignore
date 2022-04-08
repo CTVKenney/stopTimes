@@ -1,3 +1,4 @@
 # Ignore unimportant LaTeX files.
 *.log
 *.aux
+*.pdf
