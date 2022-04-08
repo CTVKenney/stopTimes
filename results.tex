@@ -39,6 +39,42 @@
 \maketitle
 
 \begin{abstract}
+    ...
+\end{abstract}
+
+\noindent [Introductory material]
+
+When $x = (x_1, ..., x_n) \in \{0,1\}^n,$ we will use the convention that for $j \in \{n+1, n+2, ...\}, x_j=0.$
+\begin{definition}
+    A binary string $x \in \{0,1\}^n$ is \emph{stopped} at $k \geq \frac{1}{2}$ if for every integer $j \in (k,2k],$
+    $x_j = 0.$ For $S(x) = \{k \geq \frac{1}{2} : x \text{ is stopped at } k\},$ the \emph{stopping time}
+    of $x$ is $\inf S(x).$
+    \begin{align}
+        \oct_n := \{ x \in \{0,1\}^n : x \text{ has stopping time } n\}.
+    \end{align}
+\end{definition}
+
+Any string of all zeros $(0,0,...,0)$ has stopping time $\frac{1}{2}$; apart from the zero string, all stopping times are integral.
+The Narayana-Zidek-Capell numbers $T_n$ are defined by the recurrence
+\begin{align}
+    T_1 &= 1 \notag \\
+    T_2 &= 1 \notag \\
+    T_{2n} &= 2 T_{2n - 1} \tag{$n \geq 2$} \\
+    T_{2n + 1} &= 2 T_{2n} - T_n. \tag{$n \geq 1$}
+\end{align}
+The sequence $T_n$ is A2083 in the OEIS \cite{oeis}, and was originally
+introduced by Capell and Narayana \cite{capell1970knock,
+narayana1969tournaments, narayana1979tournaments} as a means to enumerate so-called
+`random knock-out tournaments'.
+
+
+
+
+\begin{center} \rule{8cm}{0.4pt} \end{center}
+
+\newpage
+
+\begin{abstract}
     A binary string $(x_1, \dots, x_n)$ is \emph{stopped at index $k$} if all
     indices in $(k / 2, k]$ are zero. The \emph{stopping time} of a binary
     string is the smallest such $k$, if any exist. We show that the number of
